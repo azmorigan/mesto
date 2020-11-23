@@ -1,4 +1,13 @@
 .form {
+  width: 100%;
   margin-bottom: 48px;
-  
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 767px) {
+  .form {
+    margin-bottom: 45px;
+  }
 }

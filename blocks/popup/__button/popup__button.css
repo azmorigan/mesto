@@ -3,9 +3,19 @@
   padding: 14px 0 18px;
   color: #fff;
   background-color: #000;
+  border: none;
   border-radius: 2px;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__button {
+    padding: 14px 0;
+    color: #fff;
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
