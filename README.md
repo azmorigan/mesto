@@ -1,17 +1,13 @@
-# Проект 4: Место
+# Проект :four:: Место :evergreen_tree::evergreen_tree::evergreen_tree:
+![картинка](./images/Новороссийск.jpg)
+### О проекте:
+Одностраничный адаптивный сайт с возможностью менять имя и деятельность в профиле при помощи формы, всплывающей при нажатии на кнопку редактирования.
 
-### Обзор
-
-* Figma
-* Картинки
-
-**Figma**
-
-* [Ссылка на макет в Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
-
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+Использованные технологии и ПО:
+* HTML, CSS, JavaScript
+* Figma, VS Code
+* BEM, Flex, Grid, DOM
+------
+:information_source:\
+[Деплой]()\
+[Макет](https://www.figma.com/file/UBc0t42LpJBOtdVS4RZLzj/JavaScript.-Sprint-4-(Copy)?node-id=0%3A1)
