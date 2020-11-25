@@ -9,5 +9,5 @@
 * BEM, Flex, Grid, DOM
 ------
 :information_source:\
-[Деплой](https://azmorigan.github.io/mesto/){:target="_blank"}\
-[Макет](https://www.figma.com/file/UBc0t42LpJBOtdVS4RZLzj/JavaScript.-Sprint-4-(Copy)?node-id=0%3A1){:target="_blank"}
+[Деплой](https://azmorigan.github.io/mesto/)\
+[Макет](https://www.figma.com/file/UBc0t42LpJBOtdVS4RZLzj/JavaScript.-Sprint-4-(Copy)?node-id=0%3A1)
