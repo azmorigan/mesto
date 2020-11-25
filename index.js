@@ -1,9 +1,9 @@
-const popup = document.querySelector('.popup')
-const editPopap = document.querySelector('.profile__edit-button')
-const closePopap = document.querySelector('.popup__close')
-const formElement = document.querySelector('.form')
-const profileTitle = document.querySelector('.profile__title')
-const profileSubtitle = document.querySelector('.profile__subtitle')
+let popup = document.querySelector('.popup')
+let editPopap = document.querySelector('.profile__edit-button')
+let closePopap = document.querySelector('.popup__close')
+let formElement = document.querySelector('.form')
+let profileTitle = document.querySelector('.profile__title')
+let profileSubtitle = document.querySelector('.profile__subtitle')
 
 function openPopup() {
   popup.classList.add('popup__opened')
