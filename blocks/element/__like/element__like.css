@@ -1,5 +1,8 @@
 .element__like {
-  display: block;
+  padding: 0;
+  background-color: transparent;
+  background: url(../../../images/heart.svg) no-repeat center;
+  border: none;
   width: 21px;
   height: 19px;
   transition: opacity .3s linear;

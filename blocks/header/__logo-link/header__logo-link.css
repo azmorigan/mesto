@@ -2,6 +2,9 @@
   display: inline-block;
   width: 142px;
   height: 33px;
+  background-image: url(../../../images/logo.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
   margin-bottom: 37px;
   transition: opacity .5s linear;
 }

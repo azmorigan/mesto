@@ -4,6 +4,11 @@
   right: -50px;
   width: 58px;
   height: 58px;
+  padding: 0;
+  background-color: transparent;
+  background: url(../../../images/close.svg);
+  background-size: contain;
+  border: none;
   transition: opacity .3s linear;
 }
 
