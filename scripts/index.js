@@ -7,16 +7,19 @@ let formElement = document.querySelector('.form')
 let nameInput = formElement.querySelector('.form__input_name')
 let jobInput = formElement.querySelector('.form__input_job')
 
+// Открыть попап
 function openPopup() {
   nameInput.value = profileTitle.textContent
   jobInput.value = profileSubtitle.textContent
   popup.classList.add('popup_opened')
 }
 
+// Закрыть попап
 function closePopup() {
   popup.classList.remove('popup_opened')
 }
 
+// Отправка формы при нажатии на кнопку
 function formSubmitHandler(evt) {
   evt.preventDefault()
   profileTitle.textContent = nameInput.value
