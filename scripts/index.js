@@ -4,10 +4,9 @@ let closePopap = document.querySelector('.popup__close')
 let profileTitle = document.querySelector('.profile__title')
 let profileSubtitle = document.querySelector('.profile__subtitle')
 let formElement = document.querySelector('.form')
-// Доступ к input без модификаторов
-let nameInput = formElement[0]
-let jobInput = formElement[1]
-
+// Доступ к input через атрибут name
+let nameInput = formElement.name
+let jobInput = formElement.job
 
 // Открыть попап
 function openPopup() {
