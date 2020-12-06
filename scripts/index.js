@@ -8,16 +8,11 @@ let formElement = document.querySelector('.form')
 let nameInput = formElement.name
 let jobInput = formElement.job
 
-// Открыть попап
-function openPopup() {
+// Открыть или закрыть попап
+function togglePopup() {
   nameInput.value = profileTitle.textContent
   jobInput.value = profileSubtitle.textContent
-  popup.classList.add('popup_opened')
-}
-
-// Закрыть попап
-function closePopup() {
-  popup.classList.remove('popup_opened')
+  popup.classList.toggle('popup_opened')
 }
 
 // Замена имени и деятельности с помощью формы
@@ -25,9 +20,9 @@ function formSubmitHandler(evt) {
   evt.preventDefault()
   profileTitle.textContent = nameInput.value
   profileSubtitle.textContent = jobInput.value
-  closePopup()
+  togglePopup()
 }
 
-editPopap.addEventListener('click', openPopup)
-closePopap.addEventListener('click', closePopup)
+editPopap.addEventListener('click', togglePopup)
+closePopap.addEventListener('click', togglePopup)
 formElement.addEventListener('submit', formSubmitHandler)
