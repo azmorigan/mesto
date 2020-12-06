@@ -25,12 +25,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14db710d-7a46-4f41-9b66-e47744ae0ecd" name="Default Changelist" comment="fix: добавить модификаторы в input, добавить элемент form__input">
-      <change beforePath="$PROJECT_DIR$/blocks/popup/__opened/popup__opened.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/popup/_opened/popup_opened.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/profile/__info/profile__info.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/profile/__info/profile__info.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/profile/__title/profile__title.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/profile/__title/profile__title.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +73,10 @@
       <updated>1606471733471</updated>
       <workItem from="1606471736198" duration="9808000" />
       <workItem from="1606555612690" duration="986000" />
+      <workItem from="1607080877626" duration="29000" />
+      <workItem from="1607081380142" duration="104000" />
+      <workItem from="1607267531497" duration="402000" />
+      <workItem from="1607268105543" duration="838000" />
     </task>
     <task id="LOCAL-00001" summary="fix: исправить имена картинок, добавить кнопкам aria-label">
       <created>1606479166803</created>
