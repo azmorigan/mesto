@@ -8,11 +8,6 @@
       </path>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:hotfix" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
       <path>
@@ -21,11 +16,18 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feat" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14db710d-7a46-4f41-9b66-e47744ae0ecd" name="Default Changelist" comment="fix: добавить модификаторы в input, добавить элемент form__input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,9 +53,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -76,7 +80,12 @@
       <workItem from="1607080877626" duration="29000" />
       <workItem from="1607081380142" duration="104000" />
       <workItem from="1607267531497" duration="402000" />
-      <workItem from="1607268105543" duration="838000" />
+      <workItem from="1607268105543" duration="5067000" />
+      <workItem from="1607284621421" duration="708000" />
+      <workItem from="1607331175413" duration="1289000" />
+      <workItem from="1607332491219" duration="7000" />
+      <workItem from="1607333692620" duration="355000" />
+      <workItem from="1607334075766" duration="1809000" />
     </task>
     <task id="LOCAL-00001" summary="fix: исправить имена картинок, добавить кнопкам aria-label">
       <created>1606479166803</created>
@@ -92,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606485335352</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: add function togglePopup instead of closePopap and openPopup">
+      <created>1607269057348</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607269057348</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,28 +129,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix: исправить имена картинок, добавить кнопкам aria-label" />
     <MESSAGE value="fix: добавить модификаторы в input, добавить элемент form__input" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: добавить модификаторы в input, добавить элемент form__input" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="540" y="98" key="#CSS" timestamp="1606479738406">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="540" y="98" key="#CSS/0.0.1536.824@0.0.1536.824" timestamp="1606479738406" />
-    <state x="360" y="70" width="816" height="730" key="#Intentions" timestamp="1606472224668">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="360" y="70" width="816" height="730" key="#Intentions/0.0.1536.824@0.0.1536.824" timestamp="1606472224668" />
-    <state x="519" y="235" key="#Notifications" timestamp="1606472065367">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="519" y="235" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1606472065367" />
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1606478794594">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1606478794594" />
-    <state x="585" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606479079916">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="585" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1606479079916" />
+    <MESSAGE value="feat: add function togglePopup instead of closePopap and openPopup" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add function togglePopup instead of closePopap and openPopup" />
   </component>
 </project>
