@@ -27,6 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="14db710d-7a46-4f41-9b66-e47744ae0ecd" name="Default Changelist" comment="fix: добавить модификаторы в input, добавить элемент form__input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/elements/__list/elements__list.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/elements/__list/elements__list.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/index.js" afterDir="false" />
     </list>
@@ -85,7 +86,9 @@
       <workItem from="1607331175413" duration="1289000" />
       <workItem from="1607332491219" duration="7000" />
       <workItem from="1607333692620" duration="355000" />
-      <workItem from="1607334075766" duration="1809000" />
+      <workItem from="1607334075766" duration="7965000" />
+      <workItem from="1607354726212" duration="1214000" />
+      <workItem from="1607411627956" duration="15088000" />
     </task>
     <task id="LOCAL-00001" summary="fix: исправить имена картинок, добавить кнопкам aria-label">
       <created>1606479166803</created>
@@ -108,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607269057348</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: add popup to add cards">
+      <created>1607336925038</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607336925038</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +140,7 @@
     <MESSAGE value="fix: исправить имена картинок, добавить кнопкам aria-label" />
     <MESSAGE value="fix: добавить модификаторы в input, добавить элемент form__input" />
     <MESSAGE value="feat: add function togglePopup instead of closePopap and openPopup" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add function togglePopup instead of closePopap and openPopup" />
+    <MESSAGE value="feat: add popup to add cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add popup to add cards" />
   </component>
 </project>
