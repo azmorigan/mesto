@@ -3,7 +3,6 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
   justify-items: center;
   row-gap: 20px;
   -moz-column-gap: 17px;
@@ -17,7 +16,6 @@
   .elements__list {
     width: 90%;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
   }
 }
 
@@ -25,6 +23,5 @@
   .elements__list {
     width: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, 1fr);
   }
 }
