@@ -65,7 +65,13 @@ function composeItem(item) {
   itemPlace.textContent = item.name
   const removeCardButton = newItem.querySelector('.element__remove')
   removeCardButton.addEventListener('click', removeItem)
+  const likeButton = newItem.querySelector('.element__like')
+  likeButton.addEventListener('click', likeCard)
   return newItem
+}
+// Поставить лайк
+function likeCard(event) {
+  event.target.classList.toggle('element__like_click')
 }
 // Удалить карту
 function removeItem(event) {

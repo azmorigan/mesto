@@ -26,12 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14db710d-7a46-4f41-9b66-e47744ae0ecd" name="Default Changelist" comment="fix: добавить модификаторы в input, добавить элемент form__input">
-      <change afterPath="$PROJECT_DIR$/blocks/element/__remove/element__remove.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/like_active.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/trash.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blocks/element/__like/_active/element__like_click.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blocks/element/element.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/element/element.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/index.js" afterDir="false" />
     </list>
@@ -66,7 +62,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -101,7 +97,8 @@
       <workItem from="1607354726212" duration="1214000" />
       <workItem from="1607411627956" duration="17432000" />
       <workItem from="1607451701052" duration="739000" />
-      <workItem from="1607503454302" duration="4417000" />
+      <workItem from="1607503454302" duration="4817000" />
+      <workItem from="1607508944814" duration="2800000" />
     </task>
     <task id="LOCAL-00001" summary="fix: исправить имена картинок, добавить кнопкам aria-label">
       <created>1606479166803</created>
@@ -138,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607438849722</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: add remove card function">
+      <created>1607508779715</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1607508779715</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +166,7 @@
     <MESSAGE value="feat: add function togglePopup instead of closePopap and openPopup" />
     <MESSAGE value="feat: add popup to add cards" />
     <MESSAGE value="feat: open and close form, render default cards, add new card" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: open and close form, render default cards, add new card" />
+    <MESSAGE value="feat: add remove card function" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add remove card function" />
   </component>
 </project>
