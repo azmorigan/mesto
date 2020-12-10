@@ -1,0 +1,6 @@
+@media screen and (max-width: 767px) {
+  .popup__close_type_add-card {
+    top: -30px;
+    right: -30px;
+  }
+}
