@@ -1,14 +1,14 @@
 // Попап редактирования профиля
 const popup = document.querySelector('.popup')
 const editPopup = document.querySelector('.profile__edit-button')
-const closePopup = document.querySelector('.popup__close')
+const closePopup = document.querySelector('.close-button')
 const profileTitle = document.querySelector('.profile__title')
 const profileSubtitle = document.querySelector('.profile__subtitle')
 // Форма
 const formElement = document.querySelector('.form')
 const popupAddCard = document.querySelector('.popup_type_add-card')
 // Попап добавления карточек
-const buttonClosePopupAddCard = document.querySelector('.popup__close_type_add-card')
+const buttonClosePopupAddCard = document.querySelector('.close-button_type_add-card')
 // Имя и деятельность в input
 let nameInput = formElement.name
 let jobInput = formElement.job
