@@ -83,15 +83,16 @@ function openModal(img, name) {
   imageModal.src = img
   imageModal.alt = name
   nameModal.textContent = name
-  // modal.classList.add('popup_opened') -
+  // modal.classList.add('popup_opened')
   // - почему-то через добавление модификатора не срабатывает
   // хотя в девтулзах класс добавляется
-  modal.style.display = 'flex'
-
+  modal.style.opacity = '1'
+  modal.style.visibility = 'visible'
 }
 // Закрыть модальное окно
 function closeModal(event) {
-  event.target.closest('.modal').style.display = "none"
+  event.target.closest('.modal').style.opacity = "0"
+  event.target.closest('.modal').style.visibility = "hidden"
   // modal.classList.remove('popup_opened')
 }
 // Поставить лайк
