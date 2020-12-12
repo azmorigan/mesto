@@ -16,35 +16,21 @@ const placeInputAddCard = formAddCard.place
 const linkInputAddCard = formAddCard.link
 // Попап изображения
 const popupImage = document.querySelector('.popup_type_modal')
+const closePopupImageButton = document.querySelector('.modal__close-button')
 // Список карточек
 const listCards = document.querySelector('.elements__list')
 // Шаблон карточки
 const templateCard = document.querySelector('#template-card')
 
-// Составить элемент используя свойства объектов
-function createCard(item) {
-  const newCard = templateCard.content.cloneNode(true)
-  const cardSrc = newCard.querySelector('.element__img')
-  cardSrc.setAttribute('src', `${item.link}`)
-  cardSrc.setAttribute('alt', `${item.name}`)
-  const cardPlaceName = newCard.querySelector('.element__title')
-  cardPlaceName.textContent = item.name
-  const removeCardButton = newCard.querySelector('.element__remove')
-  removeCardButton.addEventListener('click', removeItem)
-  const cardlikeButton = newCard.querySelector('.element__like')
-  cardlikeButton.addEventListener('click', likeCard)
-  const cardImage = newCard.querySelector('.element__img')
-  cardImage.addEventListener('click', () => {
-    openPopupImage(item.link, item.name)
-  })
-  const closePopupImageButton = document.querySelector('.modal__close-button')
-  closePopupImageButton.addEventListener('click', closePopupImage)
-  return newCard
+// Открыть любой попап
+function openPopup(popup) {
+  popup.classList.add('popup_opened')
 }
-// Закрыть модальное окно
-function closePopupImage() {
-  popupImage.classList.remove('popup_opened')
+// Закрыть любой попап
+function closePopup(popup) {
+  popup.classList.remove('popup_opened')
 }
+
 // Поставить лайк
 function likeCard(event) {
   event.target.classList.toggle('element__like_click')
@@ -54,59 +40,71 @@ function removeItem(event) {
   const removeItem = event.target.closest('.element')
   removeItem.remove()
 }
-// Открыть модальное окно
+// Открыть попап изображения
 function openPopupImage(img, name) {
   const imageModal = popupImage.querySelector('.modal__image')
   const nameModal = popupImage.querySelector('.modal__title')
   imageModal.src = img
   imageModal.alt = name
   nameModal.textContent = name
-  popupImage.classList.add('popup_opened')
+  openPopup(popupImage)
 }
+
+// Составить элемент используя свойства объектов
+function createCard(item) {
+  const card = templateCard.content.cloneNode(true)
+  const cardImage = card.querySelector('.element__img')
+  cardImage.setAttribute('src', `${item.link}`)
+  cardImage.setAttribute('alt', `${item.name}`)
+  const cardPlaceName = card.querySelector('.element__title')
+  cardPlaceName.textContent = item.name
+  const removeCardButton = card.querySelector('.element__remove')
+  removeCardButton.addEventListener('click', removeItem)
+  const cardlikeButton = card.querySelector('.element__like')
+  cardlikeButton.addEventListener('click', likeCard)
+  cardImage.addEventListener('click', () => openPopupImage(item.link, item.name))
+  closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
+  return card
+}
+
 // Отрисовать 6 карточек
-function renderList() {
-  const defaultList = initialCards.map(createCard)
-  listCards.append(...defaultList)
+function renderList(arrayOfCards, listOfCards) {
+  const defaultList = arrayOfCards.map(createCard)
+  listOfCards.append(...defaultList)
 }
-// Добавить новую карту
-function addNewItem() {
-  const newItem = createCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
-  listCards.prepend(newItem)
-}
-// Открыть или закрыть попап для редактирования профиля
-function togglePopup() {
+
+// Открыть попап для редактирования профиля
+function openPopupChangeProfile() {
   nameInputChangeProfile.value = profileName.textContent
   jobInputChangeProfile.value = profileJob.textContent
-  popupChangeProfile.classList.toggle('popup_opened')
+  openPopup(popupChangeProfile)
 }
-// Открыть попап для добавления карточки
-function openPopupAddCard() {
-  popupAddCard.classList.add('popup_opened')
-}
-// Закрыть попап для добавления карточки
-function closePopupAddCard() {
-  popupAddCard.classList.remove('popup_opened')
+
+// Добавить новую карту
+function addNewCard() {
+  const newCard = createCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
+  listCards.prepend(newCard)
 }
 // Замена имени и деятельности
 function handleProfileSubmit(evt) {
   evt.preventDefault()
   profileName.textContent = nameInputChangeProfile.value
   profileJob.textContent = jobInputChangeProfile.value
-  togglePopup()
+  closePopup(popupChangeProfile)
 }
 // Добавить карту
 function handleCardSubmit(evt) {
   evt.preventDefault()
-  addNewItem()
-  closePopupAddCard()
+  addNewCard()
+  closePopup(popupAddCard)
   formAddCard.reset()
 }
 // Основные события
-renderList()
-editPopupChangeProfileButton.addEventListener('click', togglePopup)
-closePopupChangeProfileButton.addEventListener('click', togglePopup)
-openPopupAddCardButton.addEventListener('click', openPopupAddCard)
-closePopupAddCardButton.addEventListener('click', closePopupAddCard)
+renderList(initialCards, listCards)
+editPopupChangeProfileButton.addEventListener('click', openPopupChangeProfile)
+closePopupChangeProfileButton.addEventListener('click', () => closePopup(popupChangeProfile))
+openPopupAddCardButton.addEventListener('click', () => openPopup(popupAddCard))
+closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
 formAddCard.addEventListener('submit', handleCardSubmit)
 
