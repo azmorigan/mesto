@@ -77,7 +77,7 @@ function composeItem(item) {
 // Открыть модальное окно
 
 function openModal(img, name) {
-  let modal = document.querySelector('.modal')
+  let modal = document.querySelector('.popup_type_modal')
   const imageModal = modal.querySelector('.modal__image')
   const nameModal = modal.querySelector('.modal__title')
   imageModal.src = img
@@ -91,8 +91,8 @@ function openModal(img, name) {
 }
 // Закрыть модальное окно
 function closeModal(event) {
-  event.target.closest('.modal').style.opacity = "0"
-  event.target.closest('.modal').style.visibility = "hidden"
+  event.target.closest('.popup_type_modal').style.opacity = "0"
+  event.target.closest('.popup_type_modal').style.visibility = "hidden"
   // modal.classList.remove('popup_opened')
 }
 // Поставить лайк
