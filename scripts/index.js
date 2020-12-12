@@ -1,3 +1,4 @@
+//----------------------Элементы DOM-----------------------//
 // Попап редактирования профиля
 const popupChangeProfile = document.querySelector('.popup')
 const editPopupChangeProfileButton = document.querySelector('.profile__edit-button')
@@ -21,7 +22,7 @@ const closePopupImageButton = document.querySelector('.modal__close-button')
 const listCards = document.querySelector('.elements__list')
 // Шаблон карточки
 const templateCard = document.querySelector('#template-card')
-
+//----------------------Функции-----------------------//
 // Открыть любой попап
 function openPopup(popup) {
   popup.classList.add('popup_opened')
@@ -30,7 +31,6 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened')
 }
-
 // Поставить лайк
 function likeCard(event) {
   event.target.classList.toggle('element__like_click')
@@ -49,7 +49,6 @@ function openPopupImage(img, name) {
   nameModal.textContent = name
   openPopup(popupImage)
 }
-
 // Составить элемент используя свойства объектов
 function createCard(item) {
   const card = templateCard.content.cloneNode(true)
@@ -58,6 +57,10 @@ function createCard(item) {
   cardImage.setAttribute('alt', `${item.name}`)
   const cardPlaceName = card.querySelector('.element__title')
   cardPlaceName.textContent = item.name
+  /*Правильно ли, что события: лайк, удаление, открытие и закрытие карточки
+  находятся в функции создания карточки? Ведь имя функции createCard подразумевает только
+  создание карточки. Или их надо переместить в конец кода
+  или в отдельные функции?*/
   const removeCardButton = card.querySelector('.element__remove')
   removeCardButton.addEventListener('click', removeItem)
   const cardlikeButton = card.querySelector('.element__like')
@@ -66,20 +69,17 @@ function createCard(item) {
   closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
   return card
 }
-
-// Отрисовать 6 карточек
+// Отрисовать исходные карточки
 function renderList(arrayOfCards, listOfCards) {
   const defaultList = arrayOfCards.map(createCard)
   listOfCards.append(...defaultList)
 }
-
 // Открыть попап для редактирования профиля
 function openPopupChangeProfile() {
   nameInputChangeProfile.value = profileName.textContent
   jobInputChangeProfile.value = profileJob.textContent
   openPopup(popupChangeProfile)
 }
-
 // Добавить новую карту
 function addNewCard() {
   const newCard = createCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
@@ -99,7 +99,7 @@ function handleCardSubmit(evt) {
   closePopup(popupAddCard)
   formAddCard.reset()
 }
-// Основные события
+//----------------------События-----------------------//
 renderList(initialCards, listCards)
 editPopupChangeProfileButton.addEventListener('click', openPopupChangeProfile)
 closePopupChangeProfileButton.addEventListener('click', () => closePopup(popupChangeProfile))
