@@ -17,7 +17,7 @@ const placeInputAddCard = formAddCard.place
 const linkInputAddCard = formAddCard.link
 // Попап изображения
 const popupImage = document.querySelector('.popup_type_modal')
-const closePopupImageButton = document.querySelector('.modal__close-button')
+const closePopupImageButton = document.querySelector('.close-button_type_modal')
 // Список карточек
 const listCards = document.querySelector('.elements__list')
 // Шаблон карточки

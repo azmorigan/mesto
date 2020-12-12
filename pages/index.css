@@ -47,4 +47,4 @@
 @import url(../blocks/modal/modal.css);
 @import url(../blocks/modal/__image/modal__image.css);
 @import url(../blocks/modal/__title/modal__title.css);
-@import url(../blocks/modal/__close-button/modal__close-button.css);
+@import url(../blocks/close-button/_type/close-button_type_modal.css);
