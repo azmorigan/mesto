@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 767px) {
   .form__input_type_add-card {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
 
   .form__input_type_add-card::placeholder {
