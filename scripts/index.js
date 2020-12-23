@@ -121,6 +121,16 @@ function handleCardSubmit(evt) {
   formAddCard.reset()
 }
 
+// Закрытие попапа при клике на оверлэй
+function closePopupClickOverlay() {
+  document.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      const popupParent = evt.target.closest('.popup')
+      closePopup(popupParent)
+    }
+  })
+}
+
 //----------------------События-----------------------//
 
 renderList(initialCards, listCards)
@@ -131,4 +141,5 @@ closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard)
 closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
 formAddCard.addEventListener('submit', handleCardSubmit)
+closePopupClickOverlay()
 
