@@ -84,10 +84,19 @@ function renderList(arrayOfCards, listOfCards) {
 }
 
 // Открыть попап для редактирования профиля
-function openPopupChangeProfile() {
+function openPopupChangeProfile(config) {
   nameInputChangeProfile.value = profileName.textContent
   jobInputChangeProfile.value = profileJob.textContent
+  const submitButton = formChangeProfile.querySelector(config.submitButtonSelector)
+  setButtonState(submitButton, formChangeProfile.checkValidity(), config)
   openPopup(popupChangeProfile)
+}
+
+// Открыть попап для добавления карточки
+function openPopupAddCard(config) {
+  const submitButton = formAddCard.querySelector(config.submitButtonSelector)
+  setButtonState(submitButton, formAddCard.checkValidity(), config)
+  openPopup(popupAddCard)
 }
 
 // Добавить новую карту
@@ -115,9 +124,9 @@ function handleCardSubmit(evt) {
 //----------------------События-----------------------//
 
 renderList(initialCards, listCards)
-editPopupChangeProfileButton.addEventListener('click', openPopupChangeProfile)
+editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile(validationConfig))
 closePopupChangeProfileButton.addEventListener('click', () => closePopup(popupChangeProfile))
-openPopupAddCardButton.addEventListener('click', () => openPopup(popupAddCard))
+openPopupAddCardButton.addEventListener('click', () => openPopupAddCard(validationConfig))
 closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard))
 closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
