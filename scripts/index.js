@@ -35,11 +35,21 @@ const templateCard = document.querySelector('#template-card')
 // Открыть любой попап
 function openPopup(popup) {
   popup.classList.add('popup_opened')
+  document.addEventListener('keydown', closePopupWithEsc)
 }
 
 // Закрыть любой попап
 function closePopup(popup) {
   popup.classList.remove('popup_opened')
+  document.removeEventListener('keydown', closePopupWithEsc)
+}
+
+// Закрыть попап с помощью Esc
+function closePopupWithEsc(evt) {
+  const openedPopup = document.querySelector('.popup_opened')
+  if (evt.key === 'Escape') {
+    closePopup(openedPopup)
+  }
 }
 
 // Поставить лайк
@@ -122,13 +132,11 @@ function handleCardSubmit(evt) {
 }
 
 // Закрытие попапа при клике на оверлэй
-function closePopupClickOverlay() {
-  document.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup')) {
-      const popupParent = evt.target.closest('.popup')
-      closePopup(popupParent)
-    }
-  })
+function closePopupClickOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+    const popupParent = evt.target.closest('.popup')
+    closePopup(popupParent)
+  }
 }
 
 //----------------------События-----------------------//
@@ -141,5 +149,4 @@ closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard)
 closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
 formAddCard.addEventListener('submit', handleCardSubmit)
-closePopupClickOverlay()
-
+document.addEventListener('click', closePopupClickOverlay)
