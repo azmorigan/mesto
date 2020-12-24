@@ -1,12 +1,15 @@
 //----------------------Элементы DOM-----------------------//
 
+// Все попапы
+const popups = document.querySelectorAll('.popup')
+
 // Попап редактирования профиля
-const popupChangeProfile = document.querySelector('.popup')
+const popupChangeProfile = document.querySelector('.popup_type_edit-profile')
 const editPopupChangeProfileButton = document.querySelector('.profile__edit-button')
 const closePopupChangeProfileButton = document.querySelector('.close-button')
 const profileName = document.querySelector('.profile__title')
 const profileJob = document.querySelector('.profile__subtitle')
-const formChangeProfile = document.querySelector('.form')
+const formChangeProfile = popupChangeProfile.querySelector('.form')
 const nameInputChangeProfile = formChangeProfile.name
 const jobInputChangeProfile = formChangeProfile.job
 
@@ -46,8 +49,8 @@ function closePopup(popup) {
 
 // Закрыть попап с помощью Esc
 function closePopupWithEsc(evt) {
-  const openedPopup = document.querySelector('.popup_opened')
   if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
     closePopup(openedPopup)
   }
 }
@@ -131,22 +134,23 @@ function handleCardSubmit(evt) {
   formAddCard.reset()
 }
 
-// Закрытие попапа при клике на оверлэй
-function closePopupClickOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    const popupParent = evt.target.closest('.popup')
-    closePopup(popupParent)
-  }
-}
-
 //----------------------События-----------------------//
 
 renderList(initialCards, listCards)
 editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile(validationConfig))
-closePopupChangeProfileButton.addEventListener('click', () => closePopup(popupChangeProfile))
 openPopupAddCardButton.addEventListener('click', () => openPopupAddCard(validationConfig))
-closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard))
-closePopupImageButton.addEventListener('click', () => closePopup(popupImage))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
 formAddCard.addEventListener('submit', handleCardSubmit)
-document.addEventListener('click', closePopupClickOverlay)
+
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    // Закрыть попап кликом по оверлэю
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup)
+    }
+    // Закрыть попап кликом на крестик
+    if (evt.target.classList.contains('close-button')) {
+      closePopup(popup)
+    }
+  })
+})
