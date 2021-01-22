@@ -1,55 +1,3 @@
-function showError(form, input, config) {
-  const error = form.querySelector(`#${input.id}-error`)
-  error.textContent = input.validationMessage
-  input.classList.add(config.inputErrorClass)
-}
-
-function hideError(form, input, config) {
-  const error = form.querySelector(`#${input.id}-error`)
-  error.textContent = ''
-  input.classList.remove(config.inputErrorClass)
-}
-
-function checkInputValidity(form, input, config) {
-  if (input.validity.valid) {
-    hideError(form, input, config)
-  } else {
-    showError(form, input, config)
-  }
-}
-
-function setButtonState(button, isActive, config) {
-  if (isActive) {
-    button.classList.remove(config.inactiveButtonClass)
-    button.disabled = false
-  } else {
-    button.classList.add(config.inactiveButtonClass)
-    button.disabled = true
-  }
-}
-
-function setEventListener(form, config) {
-  const inputList = form.querySelectorAll(config.inputSelector)
-  const submitButton = form.querySelector(config.submitButtonSelector)
-
-  inputList.forEach(input => {
-    input.addEventListener('input', () => {
-      checkInputValidity(form, input, config)
-      setButtonState(submitButton, form.checkValidity(), config)
-    })
-  })
-}
-
-function enableValidation(config) {
-  const forms = document.querySelectorAll(config.formSelector)
-  forms.forEach(form => {
-    setEventListener(form, config)
-    form.addEventListener('submit', (evt) => {
-      evt.preventDefault()
-    })
-  })
-}
-
 const validationConfig = ({
   formSelector: '.form',
   inputSelector: '.form__input',
@@ -58,4 +6,75 @@ const validationConfig = ({
   inputErrorClass: 'form__input_state_invalid'
 })
 
-enableValidation(validationConfig)
+
+// ООП
+class FormValidator {
+  constructor(config, form) {
+    this._formSelector = config.formSelector
+    this._inputSelector = config.inputSelector
+    this._submitButtonSelector = config.submitButtonSelector
+    this._inactiveButtonClass = config.inactiveButtonClass
+    this._inputErrorClass = config.inputErrorClass
+    this._form = form
+  }
+
+_showError(form, input) {
+  this._error = form.querySelector(`#${input.id}-error`)
+  this._error.textContent = input.validationMessage
+  input.classList.add(this._inputErrorClass)
+}
+
+_hideError(form, input) {
+  this._error = form.querySelector(`#${input.id}-error`)
+  this._error.textContent = ''
+  input.classList.remove(this._inputErrorClass)
+}
+
+_checkInputValidity(form, input) {
+  if (input.validity.valid) {
+    this._hideError(form, input)
+  } else {
+    this._showError(form, input)
+  }
+}
+
+setButtonState(button, isActive) {
+  if (isActive) {
+    button.classList.remove(this._inactiveButtonClass)
+    button.disabled = false
+  } else {
+    button.classList.add(this._inactiveButtonClass)
+    button.disabled = true
+  }
+}
+
+
+_setEventListeners(form) {
+  const inputList = form.querySelectorAll(this._inputSelector)
+  const submitButton = form.querySelector(this._submitButtonSelector)
+
+  inputList.forEach(input => {
+    input.addEventListener('input', () => {
+      this._checkInputValidity(form, input)
+      this.setButtonState(submitButton, form.checkValidity())
+    })
+  })
+}
+
+  enableValidation() {
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault()
+    })
+    this._setEventListeners(this._form)
+  }
+
+}
+
+const forms = document.querySelectorAll('.form')
+    forms.forEach(form => {
+      const validForm = new FormValidator(validationConfig, form)
+      validForm.enableValidation()
+    })
+
+export {validationConfig, FormValidator}
+

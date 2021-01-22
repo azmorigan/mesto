@@ -24,3 +24,5 @@ const initialCards = [
     link: './images/novorossiysk.jpg'
   }
 ]
+
+export {initialCards}

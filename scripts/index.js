@@ -1,3 +1,6 @@
+import {validationConfig, FormValidator} from './validate.js'
+import {initialCards} from './initial-cards.js';
+
 //----------------------Элементы DOM-----------------------//
 
 // Все попапы
@@ -6,7 +9,6 @@ const popups = document.querySelectorAll('.popup')
 // Попап редактирования профиля
 const popupChangeProfile = document.querySelector('.popup_type_edit-profile')
 const editPopupChangeProfileButton = document.querySelector('.profile__edit-button')
-const closePopupChangeProfileButton = document.querySelector('.close-button')
 const profileName = document.querySelector('.profile__title')
 const profileJob = document.querySelector('.profile__subtitle')
 const formChangeProfile = popupChangeProfile.querySelector('.form')
@@ -15,7 +17,6 @@ const jobInputChangeProfile = formChangeProfile.job
 
 // Попап добавления карточек
 const popupAddCard = document.querySelector('.popup_type_add-card')
-const closePopupAddCardButton = document.querySelector('.close-button_type_add-card')
 const openPopupAddCardButton = document.querySelector('.profile__add-button')
 const formAddCard = document.querySelector('.form_type_add-card')
 const placeInputAddCard = formAddCard.place
@@ -23,15 +24,11 @@ const linkInputAddCard = formAddCard.link
 
 // Попап изображения
 const popupImage = document.querySelector('.popup_type_modal')
-const closePopupImageButton = document.querySelector('.close-button_type_modal')
 const picturePopupImage = popupImage.querySelector('.modal__image')
 const namePopupImage = popupImage.querySelector('.modal__title')
 
 // Список карточек
 const listCards = document.querySelector('.elements__list')
-
-// Шаблон карточки
-const templateCard = document.querySelector('#template-card')
 
 //----------------------Функции-----------------------//
 
@@ -74,48 +71,30 @@ function openPopupImage(img, name) {
   openPopup(popupImage)
 }
 
-// Составить элемент используя свойства объектов
-function createCard(item) {
-  const card = templateCard.content.cloneNode(true)
-  const cardImage = card.querySelector('.element__img')
-  cardImage.src = item.link
-  cardImage.alt = item.name
-  const cardPlaceName = card.querySelector('.element__title')
-  cardPlaceName.textContent = item.name
-  const removeCardButton = card.querySelector('.element__remove')
-  removeCardButton.addEventListener('click', removeItem)
-  const cardlikeButton = card.querySelector('.element__like')
-  cardlikeButton.addEventListener('click', likeCard)
-  cardImage.addEventListener('click', () => openPopupImage(item.link, item.name))
-  return card
-}
-
-// Отрисовать исходные карточки
-function renderList(arrayOfCards, listOfCards) {
-  const defaultList = arrayOfCards.map(createCard)
-  listOfCards.append(...defaultList)
-}
-
 // Открыть попап для редактирования профиля
 function openPopupChangeProfile(config) {
   nameInputChangeProfile.value = profileName.textContent
   jobInputChangeProfile.value = profileJob.textContent
   const submitButton = formChangeProfile.querySelector(config.submitButtonSelector)
-  setButtonState(submitButton, formChangeProfile.checkValidity(), config)
+  const validFormWithOpenPopup = new FormValidator(validationConfig, config.formSelector)
+  validFormWithOpenPopup.setButtonState(submitButton, formChangeProfile.checkValidity())
+  // setButtonState(submitButton, formChangeProfile.checkValidity())
   openPopup(popupChangeProfile)
 }
 
 // Открыть попап для добавления карточки
 function openPopupAddCard(config) {
   const submitButton = formAddCard.querySelector(config.submitButtonSelector)
-  setButtonState(submitButton, formAddCard.checkValidity(), config)
+  const validFormWithOpenPopup = new FormValidator(validationConfig, config.formSelector)
+  validFormWithOpenPopup.setButtonState(submitButton, formAddCard.checkValidity())
   openPopup(popupAddCard)
 }
 
 // Добавить новую карту
 function addNewCard() {
-  const newCard = createCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
-  listCards.prepend(newCard)
+  const newCard = new Card({ name: placeInputAddCard.value, link: linkInputAddCard.value }, "#template-card")
+  const newCardElement = newCard.createCard()
+  listCards.prepend(newCardElement)
 }
 
 // Замена имени и деятельности
@@ -136,7 +115,6 @@ function handleCardSubmit(evt) {
 
 //----------------------События-----------------------//
 
-renderList(initialCards, listCards)
 editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile(validationConfig))
 openPopupAddCardButton.addEventListener('click', () => openPopupAddCard(validationConfig))
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
@@ -153,4 +131,41 @@ popups.forEach((popup) => {
       closePopup(popup)
     }
   })
+})
+
+
+// ООП
+class Card {
+  constructor(card, cardSelector) {
+    this._name = card.name
+    this._link = card.link
+    this._cardSelector = cardSelector
+  }
+
+  _getTemplate() {
+    const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true)
+    return cardElement
+  }
+
+  _setEventListeners() {
+    this._card.querySelector('.element__like').addEventListener('click', likeCard)
+    this._card.querySelector('.element__remove').addEventListener('click', removeItem)
+    this._card.querySelector('.element__img').addEventListener('click', () => openPopupImage(this._link, this._name))
+  }
+
+  createCard() {
+    this._card = this._getTemplate()
+    this._setEventListeners()
+    this._card.querySelector('.element__img').src = this._link
+    this._card.querySelector('.element__img').alt = this._name
+    this._card.querySelector('.element__title').textContent = this._name
+    return this._card
+  }
+
+}
+
+initialCards.forEach(item => {
+  const card = new Card(item, "#template-card")
+  const cardElement = card.createCard()
+  listCards.append(cardElement)
 })
