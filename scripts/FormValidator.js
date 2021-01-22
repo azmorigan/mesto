@@ -1,13 +1,3 @@
-const validationConfig = ({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__button',
-  inactiveButtonClass: 'form__button_disabled',
-  inputErrorClass: 'form__input_state_invalid'
-})
-
-
-// ООП
 class FormValidator {
   constructor(config, form) {
     this._formSelector = config.formSelector
@@ -69,12 +59,5 @@ _setEventListeners(form) {
   }
 
 }
-
-const forms = document.querySelectorAll('.form')
-    forms.forEach(form => {
-      const validForm = new FormValidator(validationConfig, form)
-      validForm.enableValidation()
-    })
-
-export {validationConfig, FormValidator}
+export {FormValidator}
 

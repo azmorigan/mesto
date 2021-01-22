@@ -1,5 +1,6 @@
-import {validationConfig, FormValidator} from './validate.js'
-import {initialCards} from './initial-cards.js';
+import {FormValidator} from './FormValidator.js'
+import {Card} from './Card.js'
+import {initialCards} from './initial-cards.js'
 
 //----------------------Элементы DOM-----------------------//
 
@@ -50,25 +51,6 @@ function closePopupWithEsc(evt) {
     const openedPopup = document.querySelector('.popup_opened')
     closePopup(openedPopup)
   }
-}
-
-// Поставить лайк
-function likeCard(event) {
-  event.target.classList.toggle('element__like_click')
-}
-
-// Удалить карту
-function removeItem(event) {
-  const removeItem = event.target.closest('.element')
-  removeItem.remove()
-}
-
-// Открыть попап изображения
-function openPopupImage(img, name) {
-  picturePopupImage.src = img
-  picturePopupImage.alt = name
-  namePopupImage.textContent = name
-  openPopup(popupImage)
 }
 
 // Открыть попап для редактирования профиля
@@ -133,39 +115,22 @@ popups.forEach((popup) => {
   })
 })
 
-
-// ООП
-class Card {
-  constructor(card, cardSelector) {
-    this._name = card.name
-    this._link = card.link
-    this._cardSelector = cardSelector
-  }
-
-  _getTemplate() {
-    const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true)
-    return cardElement
-  }
-
-  _setEventListeners() {
-    this._card.querySelector('.element__like').addEventListener('click', likeCard)
-    this._card.querySelector('.element__remove').addEventListener('click', removeItem)
-    this._card.querySelector('.element__img').addEventListener('click', () => openPopupImage(this._link, this._name))
-  }
-
-  createCard() {
-    this._card = this._getTemplate()
-    this._setEventListeners()
-    this._card.querySelector('.element__img').src = this._link
-    this._card.querySelector('.element__img').alt = this._name
-    this._card.querySelector('.element__title').textContent = this._name
-    return this._card
-  }
-
-}
+const validationConfig = ({
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__input_state_invalid'
+})
 
 initialCards.forEach(item => {
   const card = new Card(item, "#template-card")
   const cardElement = card.createCard()
   listCards.append(cardElement)
 })
+
+const forms = document.querySelectorAll('.form')
+    forms.forEach(form => {
+      const validForm = new FormValidator(validationConfig, form)
+      validForm.enableValidation()
+    })
