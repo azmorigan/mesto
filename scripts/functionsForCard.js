@@ -1,3 +1,6 @@
+// Тоже не по ТЗ созданный файл, но если хранить функции в index.js 
+// и импортировать их в Card.js, то выдает ошибку
+
 // Поставить лайк
 function likeCard(event) {
   event.target.classList.toggle('element__like_click')

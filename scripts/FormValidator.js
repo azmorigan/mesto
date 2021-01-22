@@ -28,6 +28,9 @@ _checkInputValidity(form, input) {
   }
 }
 
+// 2-ой публичный метод (не по тз), но он используется в 
+// при открытии попапов в index.js
+
 setButtonState(button, isActive) {
   if (isActive) {
     button.classList.remove(this._inactiveButtonClass)
@@ -59,5 +62,6 @@ _setEventListeners(form) {
   }
 
 }
+
 export {FormValidator}
 

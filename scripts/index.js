@@ -60,7 +60,6 @@ function openPopupChangeProfile(config) {
   const submitButton = formChangeProfile.querySelector(config.submitButtonSelector)
   const validFormWithOpenPopup = new FormValidator(validationConfig, config.formSelector)
   validFormWithOpenPopup.setButtonState(submitButton, formChangeProfile.checkValidity())
-  // setButtonState(submitButton, formChangeProfile.checkValidity())
   openPopup(popupChangeProfile)
 }
 
@@ -115,6 +114,8 @@ popups.forEach((popup) => {
   })
 })
 
+// Правильно ли, что validationConfig хранится в этом файле? 
+// Или лучше в отдельный файл?
 const validationConfig = ({
   formSelector: '.form',
   inputSelector: '.form__input',
