@@ -12,7 +12,7 @@ const popupChangeProfile = document.querySelector('.popup_type_edit-profile')
 const editPopupChangeProfileButton = document.querySelector('.profile__edit-button')
 const profileName = document.querySelector('.profile__title')
 const profileJob = document.querySelector('.profile__subtitle')
-const formChangeProfile = popupChangeProfile.querySelector('.form')
+const formChangeProfile = popupChangeProfile.querySelector('.form_type_change-profile')
 const nameInputChangeProfile = formChangeProfile.name
 const jobInputChangeProfile = formChangeProfile.job
 
@@ -23,15 +23,35 @@ const formAddCard = document.querySelector('.form_type_add-card')
 const placeInputAddCard = formAddCard.place
 const linkInputAddCard = formAddCard.link
 
+// Список карточек
+const listCards = document.querySelector('.elements__list')
+
 // Попап изображения
 const popupImage = document.querySelector('.popup_type_modal')
 const picturePopupImage = popupImage.querySelector('.modal__image')
 const namePopupImage = popupImage.querySelector('.modal__title')
 
-// Список карточек
-const listCards = document.querySelector('.elements__list')
-
 //----------------------Функции-----------------------//
+
+
+// Поставить лайк
+function likeCard(event) {
+  event.target.classList.toggle('element__like_click')
+}
+
+// Удалить карту
+function removeItem(event) {
+  const removeItem = event.target.closest('.element')
+  removeItem.remove()
+}
+
+// Открыть попап изображения
+function openPopupImage(img, name) {
+  picturePopupImage.src = img
+  picturePopupImage.alt = name
+  namePopupImage.textContent = name
+  openPopup(popupImage)
+}
 
 // Открыть любой попап
 function openPopup(popup) {
@@ -54,26 +74,24 @@ function closePopupWithEsc(evt) {
 }
 
 // Открыть попап для редактирования профиля
-function openPopupChangeProfile(config) {
+function openPopupChangeProfile() {
   nameInputChangeProfile.value = profileName.textContent
   jobInputChangeProfile.value = profileJob.textContent
-  const submitButton = formChangeProfile.querySelector(config.submitButtonSelector)
-  const validFormWithOpenPopup = new FormValidator(validationConfig, config.formSelector)
-  validFormWithOpenPopup.setButtonState(submitButton, formChangeProfile.checkValidity())
+  profileValidator.setButtonState(formChangeProfile.checkValidity())
+  profileValidator.resetValidation()
   openPopup(popupChangeProfile)
 }
 
 // Открыть попап для добавления карточки
-function openPopupAddCard(config) {
-  const submitButton = formAddCard.querySelector(config.submitButtonSelector)
-  const validFormWithOpenPopup = new FormValidator(validationConfig, config.formSelector)
-  validFormWithOpenPopup.setButtonState(submitButton, formAddCard.checkValidity())
+function openPopupAddCard() {
+  addCardValidator.setButtonState(formAddCard.checkValidity())
+  addCardValidator.resetValidation()
   openPopup(popupAddCard)
 }
 
 // Добавить новую карту
 function addNewCard() {
-  const newCard = new Card({ name: placeInputAddCard.value, link: linkInputAddCard.value }, "#template-card")
+  const newCard = new Card({ name: placeInputAddCard.value, link: linkInputAddCard.value }, "#template-card", likeCard, removeItem, openPopupImage)
   const newCardElement = newCard.createCard()
   listCards.prepend(newCardElement)
 }
@@ -96,8 +114,8 @@ function handleCardSubmit(evt) {
 
 //----------------------События-----------------------//
 
-editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile(validationConfig))
-openPopupAddCardButton.addEventListener('click', () => openPopupAddCard(validationConfig))
+editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
+openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
 formChangeProfile.addEventListener('submit', handleProfileSubmit)
 formAddCard.addEventListener('submit', handleCardSubmit)
 
@@ -114,8 +132,6 @@ popups.forEach((popup) => {
   })
 })
 
-// Правильно ли, что validationConfig хранится в этом файле? 
-// Или лучше в отдельный файл?
 const validationConfig = ({
   formSelector: '.form',
   inputSelector: '.form__input',
@@ -125,13 +141,13 @@ const validationConfig = ({
 })
 
 initialCards.forEach(item => {
-  const card = new Card(item, "#template-card")
+  const card = new Card(item, "#template-card", likeCard, removeItem, openPopupImage)
   const cardElement = card.createCard()
   listCards.append(cardElement)
 })
 
-const forms = document.querySelectorAll('.form')
-    forms.forEach(form => {
-      const validForm = new FormValidator(validationConfig, form)
-      validForm.enableValidation()
-    })
+const profileValidator = new FormValidator(validationConfig, formChangeProfile)
+profileValidator.enableValidation()
+
+const addCardValidator = new FormValidator(validationConfig, formAddCard)
+addCardValidator.enableValidation()

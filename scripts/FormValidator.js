@@ -6,53 +6,59 @@ class FormValidator {
     this._inactiveButtonClass = config.inactiveButtonClass
     this._inputErrorClass = config.inputErrorClass
     this._form = form
+    this._inputList = this._form.querySelectorAll(this._inputSelector)
+    this._submitButton = this._form.querySelector(this._submitButtonSelector)
   }
 
-_showError(form, input) {
-  this._error = form.querySelector(`#${input.id}-error`)
-  this._error.textContent = input.validationMessage
-  input.classList.add(this._inputErrorClass)
-}
-
-_hideError(form, input) {
-  this._error = form.querySelector(`#${input.id}-error`)
-  this._error.textContent = ''
-  input.classList.remove(this._inputErrorClass)
-}
-
-_checkInputValidity(form, input) {
-  if (input.validity.valid) {
-    this._hideError(form, input)
-  } else {
-    this._showError(form, input)
+  _showError(input) {
+    this._error = this._form.querySelector(`#${input.id}-error`)
+    this._error.textContent = input.validationMessage
+    input.classList.add(this._inputErrorClass)
   }
-}
 
-// 2-ой публичный метод (не по тз), но он используется в 
-// при открытии попапов в index.js
-
-setButtonState(button, isActive) {
-  if (isActive) {
-    button.classList.remove(this._inactiveButtonClass)
-    button.disabled = false
-  } else {
-    button.classList.add(this._inactiveButtonClass)
-    button.disabled = true
+  _hideError(input) {
+    this._error = this._form.querySelector(`#${input.id}-error`)
+    this._error.textContent = ''
+    input.classList.remove(this._inputErrorClass)
   }
-}
 
+  _checkInputValidity(input) {
+    if (input.validity.valid) {
+      this._hideError(input)
+    } else {
+      this._showError(input)
+    }
+  }
 
-_setEventListeners(form) {
-  const inputList = form.querySelectorAll(this._inputSelector)
-  const submitButton = form.querySelector(this._submitButtonSelector)
+  _toggleButtonState() {
+    this._submitButton.classList.toggle(this._inputErrorClass)
+  }
 
-  inputList.forEach(input => {
-    input.addEventListener('input', () => {
-      this._checkInputValidity(form, input)
-      this.setButtonState(submitButton, form.checkValidity())
+  setButtonState(isActive) {
+    if (isActive) {
+      this._submitButton.classList.remove(this._inactiveButtonClass)
+      this._submitButton.disabled = false
+    } else {
+      this._submitButton.classList.add(this._inactiveButtonClass)
+      this._submitButton.disabled = true
+    }
+  }
+
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideError(inputElement)
     })
-  })
-}
+    this._toggleButtonState()
+  }
+
+  _setEventListeners(form) {
+    this._inputList.forEach(input => {
+      input.addEventListener('input', () => {
+        this._checkInputValidity(input)
+        this.setButtonState(form.checkValidity())
+      })
+    })
+  }
 
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {

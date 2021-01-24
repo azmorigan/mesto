@@ -52,7 +52,7 @@
   <div class="popup popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="form" name="formEdit" novalidate>
+      <form class="form form_type_change-profile" name="formEdit" novalidate>
         <input type="text" class="form__input" name="name" id="input-name" minlength="2" maxlength="40" required>
         <span id="input-name-error" class="error"></span>
         <input type="text" class="form__input" name="job" id="input-job" minlength="2" maxlength="200" required>
@@ -88,7 +88,6 @@
     </div>
   </div>
 
-  <script type="module" src="./scripts/functionsForCard.js"></script>
   <script type="module" src="./scripts/initial-cards.js"></script>
   <script type="module" src="./scripts/Card.js"></script>
   <script type="module" src="./scripts/FormValidator.js"></script>

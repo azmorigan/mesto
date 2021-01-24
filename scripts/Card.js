@@ -1,29 +1,31 @@
-import {likeCard, removeItem, openPopupImage} from './functionsForCard.js'
-
+// Вы мне написали в ревью сделать ф-ию handleCardClick, но у меня уже есть ф-ия openPopupImage, выполняющая тоже самое).
+// Ее и другие функции передал в конструктор.
 class Card {
-  constructor(card, cardSelector) {
+  constructor(card, cardSelector, likeCard, removeItem, openPopupImage) {
     this._name = card.name
     this._link = card.link
     this._cardSelector = cardSelector
-  }
-
-  _getTemplate() {
-    const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true)
-    return cardElement
+    this._likeCard = likeCard
+    this._removeItem = removeItem
+    this._openPopupImage = openPopupImage
+    this._card = document.querySelector(this._cardSelector).content.cloneNode(true)
+    this._cardImage = this._card.querySelector('.element__img')
+    this._cardTitle = this._card.querySelector('.element__title')
+    this._cardLikeButton = this._card.querySelector('.element__like')
+    this._cardRemoveButton = this._card.querySelector('.element__remove')
   }
 
   _setEventListeners() {
-    this._card.querySelector('.element__like').addEventListener('click', likeCard)
-    this._card.querySelector('.element__remove').addEventListener('click', removeItem)
-    this._card.querySelector('.element__img').addEventListener('click', () => openPopupImage(this._link, this._name))
+    this._cardLikeButton.addEventListener('click', this._likeCard)
+    this._cardRemoveButton.addEventListener('click', this._removeItem)
+    this._cardImage.addEventListener('click', () => this._openPopupImage(this._link, this._name))
   }
 
   createCard() {
-    this._card = this._getTemplate()
+    this._cardImage.src = this._link
+    this._cardImage.alt = this._name
+    this._cardTitle.textContent = this._name
     this._setEventListeners()
-    this._card.querySelector('.element__img').src = this._link
-    this._card.querySelector('.element__img').alt = this._name
-    this._card.querySelector('.element__title').textContent = this._name
     return this._card
   }
 }
