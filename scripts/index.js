@@ -140,10 +140,13 @@ const validationConfig = ({
   inputErrorClass: 'form__input_state_invalid'
 })
 
-initialCards.forEach(item => {
+function buildCard(item) {
   const card = new Card(item, "#template-card", likeCard, removeItem, openPopupImage)
-  const cardElement = card.createCard()
-  listCards.append(cardElement)
+  return card.createCard() 
+}
+
+initialCards.forEach(item => {
+  listCards.append(buildCard(item))
 })
 
 const profileValidator = new FormValidator(validationConfig, formChangeProfile)
