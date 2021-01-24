@@ -91,9 +91,8 @@ function openPopupAddCard() {
 
 // Добавить новую карту
 function addNewCard() {
-  const newCard = new Card({ name: placeInputAddCard.value, link: linkInputAddCard.value }, "#template-card", likeCard, removeItem, openPopupImage)
-  const newCardElement = newCard.createCard()
-  listCards.prepend(newCardElement)
+  const newCard = buildCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
+  listCards.prepend(newCard)
 }
 
 // Замена имени и деятельности
