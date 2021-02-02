@@ -1,6 +1,4 @@
-// Вы мне написали в ревью сделать ф-ию handleCardClick, но у меня уже есть ф-ия openPopupImage, выполняющая тоже самое).
-// Ее и другие функции передал в конструктор.
-class Card {
+export default class Card {
   constructor(card, cardSelector, likeCard, removeItem, openPopupImage) {
     this._name = card.name
     this._link = card.link
@@ -29,5 +27,3 @@ class Card {
     return this._card
   }
 }
-
-export {Card}

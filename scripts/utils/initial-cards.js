@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: 'Улаганский район',
     link: './images/ulaganskiy-rayon.jpg'
@@ -24,5 +24,3 @@ const initialCards = [
     link: './images/novorossiysk.jpg'
   }
 ]
-
-export {initialCards}
