@@ -1,6 +1,7 @@
-import FormValidator from '../components/FormValidator.js'
-import Card from '../components/Card.js'
-import {initialCards} from '../utils/initial-cards.js'
+import FormValidator from '../scripts/components/FormValidator.js'
+import Card from '../scripts/components/Card.js'
+import Section from '../scripts/components/Section.js'
+import {initialCards} from '../scripts/utils/initial-cards.js'
 import {popups,
   popupChangeProfile,
   editPopupChangeProfileButton,
@@ -15,7 +16,7 @@ import {popups,
   placeInputAddCard,
   linkInputAddCard,
   listCards,
-  validationConfig} from '../utils/constants.js'
+  validationConfig} from '../scripts/utils/constants.js'
 
 import {likeCard,
 removeItem,
@@ -23,7 +24,7 @@ openPopupImage,
 closePopup,
 handleProfileSubmit,
 openPopup
-} from '../utils/utils.js'
+} from '../scripts/utils/utils.js'
 
 
 //----------------------События-----------------------//
@@ -46,14 +47,16 @@ popups.forEach((popup) => {
   })
 })
 
-function buildCard(item) {
-  const card = new Card(item, "#template-card", likeCard, removeItem, openPopupImage)
-  return card.createCard() 
-}
-
-initialCards.forEach(item => {
-  listCards.append(buildCard(item))
-})
+//---------Отрисовка карточек-----------//
+const initialCardList = new Section({
+  items: initialCards,
+  renderer: (item)=>{
+    const card = new Card(item, "#template-card", likeCard, removeItem, openPopupImage)
+    const cardElement = card.createCard()
+    initialCardList.addItem(cardElement)
+  }}, listCards)
+initialCardList.renderItems()
+//--------------------------------------//
 
 const profileValidator = new FormValidator(validationConfig, formChangeProfile)
 profileValidator.enableValidation()
@@ -79,10 +82,11 @@ function openPopupAddCard() {
 
 // Добавить новую карту
 function addNewCard() {
-  const newCard = buildCard({ name: placeInputAddCard.value, link: linkInputAddCard.value })
-  listCards.prepend(newCard)
+  const card = new Card({name: placeInputAddCard.value, link: linkInputAddCard.value}, "#template-card", likeCard, removeItem, openPopupImage)
+  const cardElement = card.createCard()
+  initialCardList.addItem(cardElement)
 }
-
+    
 
 // Добавить карту
 function handleCardSubmit(evt) {
