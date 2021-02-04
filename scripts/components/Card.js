@@ -1,11 +1,11 @@
 export default class Card {
-  constructor(card, cardSelector, likeCard, removeItem, openPopupImage) {
+  constructor(card, cardSelector, likeCard, removeItem, handleCardClick) {
     this._name = card.name
     this._link = card.link
     this._cardSelector = cardSelector
     this._likeCard = likeCard
     this._removeItem = removeItem
-    this._openPopupImage = openPopupImage
+    this.handleCardClick = handleCardClick
     this._card = document.querySelector(this._cardSelector).content.cloneNode(true)
     this._cardImage = this._card.querySelector('.element__img')
     this._cardTitle = this._card.querySelector('.element__title')
@@ -16,7 +16,7 @@ export default class Card {
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', this._likeCard)
     this._cardRemoveButton.addEventListener('click', this._removeItem)
-    this._cardImage.addEventListener('click', () => this._openPopupImage(this._link, this._name))
+    this._cardImage.addEventListener('click', () => this.handleCardClick(this._link, this._name))
   }
 
   createCard() {
@@ -26,4 +26,5 @@ export default class Card {
     this._setEventListeners()
     return this._card
   }
+
 }
