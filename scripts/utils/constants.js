@@ -16,7 +16,7 @@ export const popupAddCardSelector = '.popup_type_add-card'
 export const popupAddCard = document.querySelector('.popup_type_add-card')
 export const openPopupAddCardButton = document.querySelector('.profile__add-button')
 export const formAddCard = document.querySelector('.form_type_add-card')
-export const placeInputAddCard = formAddCard.place
+export const nameInputAddCard = formAddCard.name
 export const linkInputAddCard = formAddCard.link
 
 // Список карточек

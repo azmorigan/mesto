@@ -4,22 +4,20 @@ import Section from '../scripts/components/Section.js'
 import Popup from '../scripts/components/Popup.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import {initialCards} from '../scripts/utils/initial-cards.js'
+import PopupWithForm from '../scripts/components/PopupWithForm.js'
+import UserInfo from '../scripts/components/UserInfo.js'
 import {popupChangeProfileSelector,
   editPopupChangeProfileButton,
-  profileName,
-  profileJob,
   formChangeProfile,
-  nameInputChangeProfile,
-  jobInputChangeProfile,
   popupAddCardSelector,
   popupImageSelector,
   openPopupAddCardButton,
   formAddCard,
-  placeInputAddCard,
-  linkInputAddCard,
   listCards,
   validationConfig} from '../scripts/utils/constants.js'
 
+
+//--------------Функции---------------//
 // Поставить лайк
 function likeCard(event) {
   event.target.classList.toggle('element__like_click')
@@ -31,6 +29,14 @@ function removeItem(event) {
   removeItem.remove()
 }
 
+function handleCardClick(img, name) {
+  const popup = new PopupWithImage(popupImageSelector, img, name)
+  popup.setEventListeners()
+  popup.open()
+}
+//------------------------------------//
+
+
 //---------Отрисовка карточек-----------//
 const initialCardList = new Section({
   items: initialCards,
@@ -41,14 +47,15 @@ const initialCardList = new Section({
   }}, listCards)
 initialCardList.renderItems()
 
-function addNewCard() {
-  const card = new Card({name: placeInputAddCard.value, link: linkInputAddCard.value}, "#template-card", likeCard, removeItem, handleCardClick)
-  const cardElement = card.createCard()
-  initialCardList.addItem(cardElement)
-}
 //--------------------------------------//
 
-//-----------------Открытие попапов---------------//
+const infoProfile = new UserInfo({
+  nameProfileSelector: '.profile__title',
+  jobProfileSelector: '.profile__subtitle'
+})
+
+
+//--------------Отрытие и закрытие попапов---------------//
 function openPopup(popupSelector) {
   const popup = new Popup(popupSelector)
   popup.setEventListeners()
@@ -56,8 +63,7 @@ function openPopup(popupSelector) {
 }
 
 function openPopupChangeProfile() {
-  nameInputChangeProfile.value = profileName.textContent
-  jobInputChangeProfile.value = profileJob.textContent
+  infoProfile.openProfile()
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
   openPopup(popupChangeProfileSelector)
@@ -69,36 +75,27 @@ function openPopupAddCard() {
   openPopup(popupAddCardSelector)
 }
 
-function handleCardClick(img, name) {
-  const popup = new PopupWithImage(popupImageSelector, img, name)
-  popup.setEventListeners()
-  popup.open()
-}
-//-----------------------------------------------//
-
-
-// Добавить карту
-function handleCardSubmit(evt) {
-  evt.preventDefault()
-  addNewCard()
-  closePopup(popupAddCard)
-  formAddCard.reset()
-}
-
-// Замена имени и деятельности
-function handleProfileSubmit(evt) {
-  evt.preventDefault()
-  profileName.textContent = nameInputChangeProfile.value
-  profileJob.textContent = jobInputChangeProfile.value
-  closePopup(popupChangeProfileSelector)
-}
-
 editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
 openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
-formChangeProfile.addEventListener('submit', handleProfileSubmit)
-formAddCard.addEventListener('submit', handleCardSubmit)
+//-----------------------------------------------//
 
+//----------------Отправка форм-------------//
 
+const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
+  {handleFormSubmit: (data) => {
+    const card = new Card(data, "#template-card", likeCard, removeItem, handleCardClick)
+    const cardElement = card.createCard()
+    initialCardList.addItem(cardElement)
+  }
+})
+popupFormAddCard.setEventListeners()
+
+const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile', {handleFormSubmit: (data) => {
+  infoProfile.setUserInfo(data)
+}})
+popupFormEditProfile.setEventListeners()
+
+//-----------------Валидация----------------//
 const profileValidator = new FormValidator(validationConfig, formChangeProfile)
 profileValidator.enableValidation()
 
