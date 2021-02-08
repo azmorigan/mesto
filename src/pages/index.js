@@ -12,6 +12,8 @@ import {popupChangeProfileSelector,
   popupImageSelector,
   openPopupAddCardButton,
   formAddCard,
+  nameInputChangeProfile,
+  jobInputChangeProfile,
   listCards,
   validationConfig} from '../scripts/utils/constants.js'
 import {initialCards} from '../scripts/utils/initial-cards.js'
@@ -20,12 +22,12 @@ import './index.css'
 
 //-------------Определение классов---------------//
 
-const popupFullImage = new PopupWithImage(popupImageSelector)
+const imagePopup = new PopupWithImage(popupImageSelector)
 
 const infoProfile = new UserInfo({
   nameProfileSelector: '.profile__title',
   jobProfileSelector: '.profile__subtitle'
-})
+}, nameInputChangeProfile, jobInputChangeProfile)
 
 
 //--------------Функции---------------//
@@ -40,41 +42,42 @@ function removeItem(event) {
   const removeItem = event.target.closest('.element')
   removeItem.remove()
 }
+
 // Открыть попап с картинкой
 function handleCardClick(img, name) {
-  popupFullImage.setEventListeners()
-  popupFullImage.open(img, name)
+  imagePopup.setEventListeners()
+  imagePopup.open(img, name)
 }
 
+// Создать карточку
+function createCard(data) {
+  const card = new Card(data, "#template-card", likeCard, removeItem, handleCardClick)
+  const cardElement = card.createCard()
+  return cardElement
+}
 
 //---------Отрисовка карточек-----------//
 const initialCardList = new Section({
   items: initialCards,
   renderer: (item)=>{
-    const card = new Card(item, "#template-card", likeCard, removeItem, handleCardClick)
-    const cardElement = card.createCard()
+    const cardElement = createCard(item)
     initialCardList.addItem(cardElement)
   }}, listCards)
 initialCardList.renderItems()
 
 //--------------Отрытие и закрытие попапов---------------//
-function openPopup(popupSelector) {
-  const popup = new Popup(popupSelector)
-  popup.setEventListeners()
-  popup.open()
-}
 
 function openPopupChangeProfile() {
   infoProfile.openProfile()
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
-  openPopup(popupChangeProfileSelector)
+  popupFormEditProfile.open()
 }
 
 function openPopupAddCard() {
   addCardValidator.setButtonState(formAddCard.checkValidity())
   addCardValidator.resetValidation()
-  openPopup(popupAddCardSelector)
+  popupFormAddCard.open()
 }
 
 editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
@@ -85,8 +88,7 @@ openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
 
 const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
-    const card = new Card(data, "#template-card", likeCard, removeItem, handleCardClick)
-    const cardElement = card.createCard()
+    const cardElement = createCard(data)
     initialCardList.addItem(cardElement)
   }
 })

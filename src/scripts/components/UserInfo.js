@@ -1,9 +1,9 @@
-import {nameInputChangeProfile, jobInputChangeProfile} from '../utils/constants.js'
-
 export default class UserInfo {
-  constructor({nameProfileSelector, jobProfileSelector}) {
+  constructor({nameProfileSelector, jobProfileSelector}, nameInput, jobInput) {
     this._nameProfile = document.querySelector(nameProfileSelector)
     this._jobProfile = document.querySelector(jobProfileSelector)
+    this._nameInput = nameInput
+    this._jobInput = jobInput
   }
 
   getUserInfo() {
@@ -19,7 +19,7 @@ export default class UserInfo {
   }
 
   openProfile() {
-    nameInputChangeProfile.value = this.getUserInfo().nameProfile
-    jobInputChangeProfile.value = this.getUserInfo().jobProfile
+    this._nameInput.value = this._nameProfile.textContent
+    this._jobInput.value = this._jobProfile.textContent
   }
 }
