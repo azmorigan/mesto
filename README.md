@@ -12,4 +12,4 @@
 
 **[Деплой проекта](https://azmorigan.github.io/mesto/)**\
 \
-![картинка](./images/screen.jpg)
+![картинка](./src/images/screen.jpg)
