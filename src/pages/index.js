@@ -3,7 +3,6 @@ import Card from '../scripts/components/Card.js'
 import Section from '../scripts/components/Section.js'
 import Popup from '../scripts/components/Popup.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js'
-import {initialCards} from '../scripts/utils/initial-cards.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import {popupChangeProfileSelector,
@@ -15,8 +14,8 @@ import {popupChangeProfileSelector,
   formAddCard,
   listCards,
   validationConfig} from '../scripts/utils/constants.js'
-
-
+import {initialCards} from '../scripts/utils/initial-cards.js'
+import './index.css'
 //--------------Функции---------------//
 // Поставить лайк
 function likeCard(event) {

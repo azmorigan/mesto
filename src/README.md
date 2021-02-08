@@ -6,6 +6,8 @@
 * HTML, CSS, JavaScript
 * Figma, VS Code
 * BEM, Flex, Grid, DOM
+* ООП
+* Webpack
 ------
 
 **[Деплой проекта](https://azmorigan.github.io/mesto/)**\
