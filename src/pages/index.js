@@ -16,7 +16,20 @@ import {popupChangeProfileSelector,
   validationConfig} from '../scripts/utils/constants.js'
 import {initialCards} from '../scripts/utils/initial-cards.js'
 import './index.css'
+
+
+//-------------Определение классов---------------//
+
+const popupFullImage = new PopupWithImage(popupImageSelector)
+
+const infoProfile = new UserInfo({
+  nameProfileSelector: '.profile__title',
+  jobProfileSelector: '.profile__subtitle'
+})
+
+
 //--------------Функции---------------//
+
 // Поставить лайк
 function likeCard(event) {
   event.target.classList.toggle('element__like_click')
@@ -27,13 +40,11 @@ function removeItem(event) {
   const removeItem = event.target.closest('.element')
   removeItem.remove()
 }
-
+// Открыть попап с картинкой
 function handleCardClick(img, name) {
-  const popup = new PopupWithImage(popupImageSelector, img, name)
-  popup.setEventListeners()
-  popup.open()
+  popupFullImage.setEventListeners()
+  popupFullImage.open(img, name)
 }
-//------------------------------------//
 
 
 //---------Отрисовка карточек-----------//
@@ -45,14 +56,6 @@ const initialCardList = new Section({
     initialCardList.addItem(cardElement)
   }}, listCards)
 initialCardList.renderItems()
-
-//--------------------------------------//
-
-const infoProfile = new UserInfo({
-  nameProfileSelector: '.profile__title',
-  jobProfileSelector: '.profile__subtitle'
-})
-
 
 //--------------Отрытие и закрытие попапов---------------//
 function openPopup(popupSelector) {
