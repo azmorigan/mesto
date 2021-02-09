@@ -20,6 +20,7 @@ import './index.css'
 //-------------Определение классов---------------//
 
 const imagePopup = new PopupWithImage(popupImageSelector)
+imagePopup.setEventListeners()
 
 const infoProfile = new UserInfo({
   nameProfileSelector: '.profile__title',
@@ -42,7 +43,6 @@ function removeItem(event) {
 
 // Открыть попап с картинкой
 function handleCardClick(img, name) {
-  imagePopup.setEventListeners()
   imagePopup.open(img, name)
 }
 
