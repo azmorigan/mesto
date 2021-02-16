@@ -4,16 +4,15 @@ import Section from '../scripts/components/Section.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import UserInfo from '../scripts/components/UserInfo.js'
+import Api from '../scripts/components/Api.js'
 import {editPopupChangeProfileButton,
   formChangeProfile,
   popupImageSelector,
   openPopupAddCardButton,
   formAddCard,
-  nameInputChangeProfile,
-  jobInputChangeProfile,
+  initialCardList,
   listCards,
   validationConfig} from '../scripts/utils/constants.js'
-import {initialCards} from '../scripts/utils/initial-cards.js'
 import './index.css'
 
 
@@ -21,12 +20,6 @@ import './index.css'
 
 const imagePopup = new PopupWithImage(popupImageSelector)
 imagePopup.setEventListeners()
-
-const infoProfile = new UserInfo({
-  nameProfileSelector: '.profile__title',
-  jobProfileSelector: '.profile__subtitle'
-}, nameInputChangeProfile, jobInputChangeProfile)
-
 
 //--------------Функции---------------//
 
@@ -53,19 +46,9 @@ function createCard(data) {
   return cardElement
 }
 
-//---------Отрисовка карточек-----------//
-const initialCardList = new Section({
-  items: initialCards,
-  renderer: (item)=>{
-    const cardElement = createCard(item)
-    initialCardList.addItem(cardElement)
-  }}, listCards)
-initialCardList.renderItems()
-
 //--------------Отрытие и закрытие попапов---------------//
 
 function openPopupChangeProfile() {
-  infoProfile.openProfile()
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
   popupFormEditProfile.open()
@@ -103,5 +86,48 @@ profileValidator.enableValidation()
 const addCardValidator = new FormValidator(validationConfig, formAddCard)
 addCardValidator.enableValidation()
 
+//---------Работа с сервером-------------//
 
 
+const api = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-20/cards/",
+  headers: {
+    'content-type': 'application/json',
+  }
+})
+
+const cards = api.getInfo()
+cards.then(data=>{
+  //---------Отрисовка карточек-----------//
+  const initialCardList = new Section({
+    items: data,
+    renderer: (item)=>{
+      const cardElement = createCard(item)
+      initialCardList.addItem(cardElement)
+    }}, listCards)
+  initialCardList.renderItems()
+})
+
+
+
+const api2 = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me/",
+  headers: {
+    'content-type': 'application/json',
+  }
+})
+
+api2.getInfo()
+  .then(({name, about, avatar}) => {
+    const infoProfile = new UserInfo({
+      nameProfileSelector: '.profile__title',
+      jobProfileSelector: '.profile__subtitle',
+      avatarProfileSelector: '.profile__avatar'
+    },
+    {
+      nameProfile: name,
+      aboutProfile: about,
+      avatarProfile: avatar
+    })
+  infoProfile.setInitialInfo()
+})
