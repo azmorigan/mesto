@@ -21,6 +21,15 @@ import './index.css'
 const imagePopup = new PopupWithImage(popupImageSelector)
 imagePopup.setEventListeners()
 
+const api = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-20/",
+  headers: {
+    authorization: 'afa481ae-bc0e-4856-9ec0-3e79ade90f5a',
+    'Content-Type': 'application/json',
+  }
+})
+
+
 //--------------Функции---------------//
 
 // Поставить лайк
@@ -46,8 +55,8 @@ function createCard(data) {
   return cardElement
 }
 
-//--------------Отрытие и закрытие попапов---------------//
 
+//--------------Отрытие и закрытие попапов---------------//
 function openPopupChangeProfile() {
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
@@ -62,10 +71,9 @@ function openPopupAddCard() {
 
 editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
 openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
-//-----------------------------------------------//
+
 
 //----------------Отправка форм-------------//
-
 const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
     const cardElement = createCard(data)
@@ -79,6 +87,7 @@ const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile', {hand
 }})
 popupFormEditProfile.setEventListeners()
 
+
 //-----------------Валидация----------------//
 const profileValidator = new FormValidator(validationConfig, formChangeProfile)
 profileValidator.enableValidation()
@@ -86,48 +95,39 @@ profileValidator.enableValidation()
 const addCardValidator = new FormValidator(validationConfig, formAddCard)
 addCardValidator.enableValidation()
 
-//---------Работа с сервером-------------//
+
+//------------Загрузка карточек--------------//
+
+api
+  .getInitialCards()
+  .then(data=>{
+    const initialCardList = new Section({
+      items: data,
+      renderer: (item)=>{
+        const cardElement = createCard(item)
+        initialCardList.addItem(cardElement)
+      }}, listCards)
+    initialCardList.renderItems()
+  })
+  .catch(err=>console.log(err))
 
 
-const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-20/cards/",
-  headers: {
-    'content-type': 'application/json',
-  }
+//------------Загрузка профиля--------------//
+
+const infoProfile = new UserInfo({
+  nameProfileSelector: '.profile__title',
+  jobProfileSelector: '.profile__subtitle',
+  avatarProfileSelector: '.profile__avatar'
 })
 
-const cards = api.getInfo()
-cards.then(data=>{
-  //---------Отрисовка карточек-----------//
-  const initialCardList = new Section({
-    items: data,
-    renderer: (item)=>{
-      const cardElement = createCard(item)
-      initialCardList.addItem(cardElement)
-    }}, listCards)
-  initialCardList.renderItems()
-})
-
-
-
-const api2 = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me/",
-  headers: {
-    'content-type': 'application/json',
-  }
-})
-
-api2.getInfo()
+api
+  .getProfileInfo()
   .then(({name, about, avatar}) => {
-    const infoProfile = new UserInfo({
-      nameProfileSelector: '.profile__title',
-      jobProfileSelector: '.profile__subtitle',
-      avatarProfileSelector: '.profile__avatar'
-    },
-    {
-      nameProfile: name,
-      aboutProfile: about,
-      avatarProfile: avatar
+    
+    infoProfile.setInitialInfo({
+      name,
+      job: about,
+      img: avatar
     })
-  infoProfile.setInitialInfo()
-})
+  })
+  .catch(err=>console.log(err))
