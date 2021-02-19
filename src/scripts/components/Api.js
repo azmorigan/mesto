@@ -28,18 +28,37 @@ export default class Api {
       })
   }
 
-  addCard(data) {
-    return fetch(this._url, {
-      method: "POST",
+  uploadProfileInfo(name, job) {
+    return fetch(this._url + 'users/me/', {
+      method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        name: name,
+        about: job
+      })
     })
       .then(res=>{
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Ошибка сервера')
+        return Promise.reject('Редактирование не удалось')
       })
   }
 
+  addCard(data) {
+    return fetch(this._url + 'cards/', {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
+    })
+      .then(res=>{
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject('Редактирование не удалось')
+      })
+  }
 }

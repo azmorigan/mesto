@@ -4,6 +4,8 @@ export const editPopupChangeProfileButton = document.querySelector('.profile__ed
 export const formChangeProfile = popupChangeProfile.querySelector('.form_type_change-profile')
 export const nameInputChangeProfile = formChangeProfile.name
 export const jobInputChangeProfile = formChangeProfile.job
+export const profileName = document.querySelector('.profile__title')
+export const profileJob = document.querySelector('.profile__subtitle')
 
 // Попап добавления карточек
 export const openPopupAddCardButton = document.querySelector('.profile__add-button')

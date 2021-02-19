@@ -12,7 +12,11 @@ import {editPopupChangeProfileButton,
   formAddCard,
   initialCardList,
   listCards,
-  validationConfig} from '../scripts/utils/constants.js'
+  validationConfig,
+  profileName,
+  profileJob,
+  nameInputChangeProfile,
+  jobInputChangeProfile} from '../scripts/utils/constants.js'
 import './index.css'
 
 
@@ -28,6 +32,14 @@ const api = new Api({
     'Content-Type': 'application/json',
   }
 })
+
+const infoProfile = new UserInfo({
+  nameProfileSelector: '.profile__title',
+  jobProfileSelector: '.profile__subtitle',
+  avatarProfileSelector: '.profile__avatar'
+}, api)
+
+
 
 
 //--------------Функции---------------//
@@ -58,6 +70,8 @@ function createCard(data) {
 
 //--------------Отрытие и закрытие попапов---------------//
 function openPopupChangeProfile() {
+  nameInputChangeProfile.value = profileName.textContent
+  jobInputChangeProfile.value = profileJob.textContent
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
   popupFormEditProfile.open()
@@ -76,14 +90,32 @@ openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
 //----------------Отправка форм-------------//
 const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
-    const cardElement = createCard(data)
-    initialCardList.addItem(cardElement)
+    console.log(data)
+    api
+      .addCard(data)
+      .then(res=>{
+        console.log(res)
+        const cardElement = createCard({
+          name: res.name,
+          link: res.link
+        })
+        listCards.prepend(cardElement)
+      })
+      .catch(err=>console.log(err))
   }
 })
 popupFormAddCard.setEventListeners()
 
-const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile', {handleFormSubmit: (data) => {
+const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
+ {handleFormSubmit: (data) => {
   infoProfile.setUserInfo(data)
+
+  api
+  .uploadProfileInfo(
+    profileName.textContent,
+    profileJob.textContent)
+  .then(res=>res)
+  .catch(err=>err) 
 }})
 popupFormEditProfile.setEventListeners()
 
@@ -97,7 +129,6 @@ addCardValidator.enableValidation()
 
 
 //------------Загрузка карточек--------------//
-
 api
   .getInitialCards()
   .then(data=>{
@@ -113,17 +144,9 @@ api
 
 
 //------------Загрузка профиля--------------//
-
-const infoProfile = new UserInfo({
-  nameProfileSelector: '.profile__title',
-  jobProfileSelector: '.profile__subtitle',
-  avatarProfileSelector: '.profile__avatar'
-})
-
 api
   .getProfileInfo()
   .then(({name, about, avatar}) => {
-    
     infoProfile.setInitialInfo({
       name,
       job: about,
@@ -131,3 +154,19 @@ api
     })
   })
   .catch(err=>console.log(err))
+
+//------------Сохранение профиля--------------//
+
+// api
+//   .uploadProfileInfo(
+//     profileName.textContent,
+//     profileJob.textContent)
+//   .then(res=>console.log(res))
+//   .catch(err=>console.log(err))
+
+// infoProfile
+//   .saveProfileInfo({
+//     name: profileName.textContent,
+//     about: profileJob.textContent
+//   })
+//   .then(res=>console.log(res))
