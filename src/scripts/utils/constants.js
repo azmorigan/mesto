@@ -27,3 +27,6 @@ export const validationConfig = {
   inactiveButtonClass: 'form__button_disabled',
   inputErrorClass: 'form__input_state_invalid'
 }
+
+// Попап редактирования аватара
+export const formEditAvatar = document.querySelector('.form_type_edit-avatar')

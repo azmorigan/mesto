@@ -10,6 +10,7 @@ import {editPopupChangeProfileButton,
   popupImageSelector,
   openPopupAddCardButton,
   formAddCard,
+  formEditAvatar,
   initialCardList,
   listCards,
   validationConfig,
@@ -24,6 +25,9 @@ import './index.css'
 
 const imagePopup = new PopupWithImage(popupImageSelector)
 imagePopup.setEventListeners()
+
+const editAvatarPopup = new PopupWithImage('.popup_type_edit-avatar')
+editAvatarPopup.setEventListeners()
 
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-20/",
@@ -41,17 +45,6 @@ const infoProfile = new UserInfo({
 
 
 //--------------Функции---------------//
-
-// // Поставить лайк
-// function likeCard(event) {
-//   event.target.classList.toggle('element__like_click')
-// }
-
-// // Удалить карту
-// function removeItem(event) {
-//   const removeItem = event.target.closest('.element')
-//   removeItem.remove()
-// }
 
 // Открыть попап с картинкой
 function handleCardClick(img, name) {
@@ -122,6 +115,9 @@ profileValidator.enableValidation()
 
 const addCardValidator = new FormValidator(validationConfig, formAddCard)
 addCardValidator.enableValidation()
+
+const editAvatarValidator = new FormValidator(validationConfig, formEditAvatar)
+editAvatarValidator.enableValidation()
 
 
 //------------Загрузка карточек--------------//
