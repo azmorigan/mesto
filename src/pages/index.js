@@ -40,20 +40,18 @@ const infoProfile = new UserInfo({
 }, api)
 
 
-
-
 //--------------Функции---------------//
 
-// Поставить лайк
-function likeCard(event) {
-  event.target.classList.toggle('element__like_click')
-}
+// // Поставить лайк
+// function likeCard(event) {
+//   event.target.classList.toggle('element__like_click')
+// }
 
-// Удалить карту
-function removeItem(event) {
-  const removeItem = event.target.closest('.element')
-  removeItem.remove()
-}
+// // Удалить карту
+// function removeItem(event) {
+//   const removeItem = event.target.closest('.element')
+//   removeItem.remove()
+// }
 
 // Открыть попап с картинкой
 function handleCardClick(img, name) {
@@ -61,8 +59,8 @@ function handleCardClick(img, name) {
 }
 
 // Создать карточку
-function createCard(data) {
-  const card = new Card(data, "#template-card", likeCard, removeItem, handleCardClick)
+function createCard(data, likes) {
+  const card = new Card(data, likes, "#template-card", handleCardClick)
   const cardElement = card.createCard()
   return cardElement
 }
@@ -90,11 +88,9 @@ openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
 //----------------Отправка форм-------------//
 const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
-    console.log(data)
     api
       .addCard(data)
       .then(res=>{
-        console.log(res)
         const cardElement = createCard({
           name: res.name,
           link: res.link
@@ -129,13 +125,16 @@ addCardValidator.enableValidation()
 
 
 //------------Загрузка карточек--------------//
+
 api
   .getInitialCards()
   .then(data=>{
     const initialCardList = new Section({
       items: data,
       renderer: (item)=>{
-        const cardElement = createCard(item)
+        let likes = item.likes.length
+        console.log(likes)
+        const cardElement = createCard(item, likes)
         initialCardList.addItem(cardElement)
       }}, listCards)
     initialCardList.renderItems()
@@ -154,19 +153,3 @@ api
     })
   })
   .catch(err=>console.log(err))
-
-//------------Сохранение профиля--------------//
-
-// api
-//   .uploadProfileInfo(
-//     profileName.textContent,
-//     profileJob.textContent)
-//   .then(res=>console.log(res))
-//   .catch(err=>console.log(err))
-
-// infoProfile
-//   .saveProfileInfo({
-//     name: profileName.textContent,
-//     about: profileJob.textContent
-//   })
-//   .then(res=>console.log(res))
