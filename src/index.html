@@ -91,6 +91,29 @@
     </div>
   </div>
 
+  <div class="popup popup_type_delete-card">
+    <div class="popup__container popup__container_type_delete-card">
+      <p class="popup__title popup__title_type_delete-card">Вы уверены?</p>
+      <form class="form form_type_delete-card" name="deleteCardForm">
+        <button type="submit" class="form__button form__button_type_delete-card">Да</button>
+      </form>
+      <button class="close-button close-button_type_delete-card"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_edit-avatar">
+    <div class="popup__container popup__container_type_edit-avatar">
+      <h2 class="popup__title popup__title_type_edit-avatar">Обновить аватар</h2>
+      <form class="form form_type_edit-avatar" name="avatarEdit" novalidate>
+        <input type="url" class="form__input form__input_type_edit-avatar" name="link" id="input-link"
+          placeholder="Ссылка на картинку" required>
+        <span id="input-link-error" class="error error_type_link"></span>
+        <button type="submit" class="form__button form__button_type_edit-avatar">Сохранить</button>
+      </form>
+      <button class="close-button close-button_type_edit-avatar" type="button" aria-label="Закрыть всплывающее окно"></button>
+    </div>
+  </div>
+
 </body>
 
 </html>

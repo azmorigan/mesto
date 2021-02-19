@@ -132,9 +132,8 @@ api
     const initialCardList = new Section({
       items: data,
       renderer: (item)=>{
-        let likes = item.likes.length
-        console.log(likes)
-        const cardElement = createCard(item, likes)
+        let likesCount = item.likes.length
+        const cardElement = createCard(item, likesCount)
         initialCardList.addItem(cardElement)
       }}, listCards)
     initialCardList.renderItems()
