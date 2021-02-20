@@ -70,22 +70,33 @@ function handleCardClick(img, name) {
 
 // Создать карточку
 function createCard({name, link, owner, _id, likes}) {
-  const card = new Card({name, link, owner, _id, userId: infoProfile.returnUserId(), likes}, "#template-card", handleCardClick,
-  () => {
-    confirmDeletePopup.setEventListeners(removeCard(card))
-    confirmDeletePopup.open()
-  },
-  () => {
-    api.setLike(card.returnCardId())
-      .then(res => {
-        card.changeLikesCount(res.likes.length)
-      })
-  },
-  () => {
-    api.deleteLike(card.returnCardId())
-      .then(res => {
-        card.changeLikesCount(res.likes.length)
-      })
+  const card = new Card(
+    {name,
+    link,
+    owner,
+    _id, 
+    userId: infoProfile.returnUserId(),
+    likes, 
+    cardSelector: "#template-card",
+    handleCardClick,
+    handleTrashClick: () => {
+      confirmDeletePopup.setEventListeners(removeCard(card))
+      confirmDeletePopup.open()
+    },
+    setLike: () => {
+      api.setLike(card.returnCardId())
+        .then(res => {
+          card.changeLikesCount(res.likes.length)
+        })
+        .catch(err=>console.log(err))
+    },
+    deleteLike: () => {
+      api.deleteLike(card.returnCardId())
+        .then(res => {
+          card.changeLikesCount(res.likes.length)
+        })
+        .catch(err=>console.log(err))
+      }
   })
   return card.createCard()
 }
@@ -107,8 +118,9 @@ function renderLoading(popupSelector, isLoading) {
 
 //--------------Отрытие и закрытие попапов---------------//
 function openPopupChangeProfile() {
-  nameInputChangeProfile.value = profileName.textContent
-  jobInputChangeProfile.value = profileJob.textContent
+  const userInfo = infoProfile.getUserInfo()
+  nameInputChangeProfile.value = userInfo.nameProfile
+  jobInputChangeProfile.value = userInfo.jobProfile
   profileValidator.setButtonState(formChangeProfile.checkValidity())
   profileValidator.resetValidation()
   popupFormEditProfile.open()
@@ -122,6 +134,7 @@ function openPopupAddCard() {
 
 function openPopupChangeAvatar() {
   editAvatarValidator.setButtonState(formChangeAvatar.checkValidity())
+  editAvatarValidator.resetValidation()
   popupChangeAvatar.open()
 }
 
@@ -145,13 +158,12 @@ popupFormAddCard.setEventListeners()
 const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
  {handleFormSubmit: (data) => {
   renderLoading('.popup_type_edit-profile', true)
-  infoProfile.setUserInfo(data)
-
   api
   .uploadProfileInfo(
     profileName.textContent,
     profileJob.textContent)
-  .then(res=>res)
+  .then(res=>{
+    infoProfile.setUserInfo(data)})
   .catch(err=>console.log(err))
   .finally(() => renderLoading('.popup_type_edit-profile', false))
 }})

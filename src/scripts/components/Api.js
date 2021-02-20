@@ -8,24 +8,14 @@ export default class Api {
     return fetch(this._url + 'cards/', {
       headers: this._headers
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Карточки не найдены: ${res.status}` )
-      })
+      .then(this._checkResponse)
   }
 
   getProfileInfo() {
     return fetch(this._url + 'users/me/', {
       headers: this._headers
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Данные профиля не найдены: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   uploadProfileInfo(name, job) {
@@ -37,12 +27,7 @@ export default class Api {
         about: job
       })
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Редактирование не удалось: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   addCard(data) {
@@ -54,12 +39,7 @@ export default class Api {
         link: data.link
       })
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Карточка не добавлена: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   deleteCard(data) {
@@ -67,12 +47,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Карточка не удалена: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   setLike(data) {
@@ -80,12 +55,7 @@ export default class Api {
       method: "PUT",
       headers: this._headers,
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Лайк не поставился: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   deleteLike(data) {
@@ -93,12 +63,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Лайк не удалился: ${res.status}`)
-      })
+      .then(this._checkResponse)
   }
 
   editProfile(imageUrl) {
@@ -109,11 +74,13 @@ export default class Api {
         avatar: imageUrl
       })
     })
-      .then(res=>{
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Аватар не изменен: ${res.status}`)
-      })
+      .then(this._checkResponse)
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 }
