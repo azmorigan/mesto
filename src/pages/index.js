@@ -90,6 +90,20 @@ function createCard({name, link, owner, _id, likes}) {
   return card.createCard()
 }
 
+// Прелоадер
+function renderLoading(popupSelector, isLoading) {
+  const formButton = document.querySelector(popupSelector).querySelector('.form__button')
+  if (isLoading) {
+    formButton.textContent = 'Сохранение...'
+  } else {
+    if (popupSelector === '.popup_type_add-card') {
+      formButton.textContent = 'Создать'
+    } else {
+      formButton.textContent = 'Сохранить'
+    }
+  }
+}
+
 
 //--------------Отрытие и закрытие попапов---------------//
 function openPopupChangeProfile() {
@@ -115,6 +129,7 @@ function openPopupChangeAvatar() {
 //----------------Отправка форм-------------//
 const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
+    renderLoading('.popup_type_add-card', true)
     api
       .addCard(data)
       .then((res)=>{
@@ -122,12 +137,14 @@ const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
         cardList.addItem(cardElement)
       })
       .catch(err=>console.log(err))
+      .finally(() => renderLoading('.popup_type_add-card', false))
   }
 })
 popupFormAddCard.setEventListeners()
 
 const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
  {handleFormSubmit: (data) => {
+  renderLoading('.popup_type_edit-profile', true)
   infoProfile.setUserInfo(data)
 
   api
@@ -135,19 +152,22 @@ const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
     profileName.textContent,
     profileJob.textContent)
   .then(res=>res)
-  .catch(err=>console.log(err)) 
+  .catch(err=>console.log(err))
+  .finally(() => renderLoading('.popup_type_edit-profile', false))
 }})
 popupFormEditProfile.setEventListeners()
 
 
 const popupChangeAvatar = new PopupWithForm('.popup_type_edit-avatar',
 {handleFormSubmit: (data) => {
+  renderLoading('.popup_type_edit-avatar', true)
   api
   .editProfile(data.avatar)
   .then(res=>{
     infoProfile.setAvatar(data.avatar)
   })
-  .catch(err=>console.log(err)) 
+  .catch(err=>console.log(err))
+  .finally(() => renderLoading('.popup_type_edit-avatar', false))
   }})
 popupChangeAvatar.setEventListeners()
 
