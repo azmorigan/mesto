@@ -5,6 +5,7 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import Api from '../scripts/components/Api.js'
+import PopupWithSubmit from '../scripts/components/PopupWithSubmit.js'
 import {editPopupChangeProfileButton,
   formChangeProfile,
   popupImageSelector,
@@ -42,6 +43,20 @@ const infoProfile = new UserInfo({
   avatarProfileSelector: '.profile__avatar'
 }, api)
 
+const confirmDeletePopup = new PopupWithSubmit('.popup_type_delete-card')
+
+function removeCard(card) {
+  return () => {
+    api.deleteCard(card.returnCardId())
+      .then((res)=>{
+        confirmDeletePopup.close()
+        card.removeItem()
+      })
+      .catch(err=>console.log(err))
+  }
+}
+
+
 
 //--------------Функции---------------//
 
@@ -52,7 +67,11 @@ function handleCardClick(img, name) {
 
 // Создать карточку
 function createCard({name, link, owner, _id, likes}) {
-  const card = new Card({name, link, owner, _id, userId: infoProfile.returnUserId(), likes}, "#template-card", handleCardClick)
+  const card = new Card({name, link, owner, _id, userId: infoProfile.returnUserId(), likes}, "#template-card", handleCardClick,
+  () => {
+    confirmDeletePopup.setEventListeners(removeCard(card))
+    confirmDeletePopup.open()
+  })
   return card.createCard()
 }
 
