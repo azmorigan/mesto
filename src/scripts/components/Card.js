@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({name, link, owner, _id, userId, likes}, cardSelector, handleCardClick, handleTrashClick) {
+  constructor({name, link, owner, _id, userId, likes}, cardSelector, handleCardClick, handleTrashClick, setLike, deleteLike) {
     this._name = name
     this._link = link
     this._ownerId = owner._id
@@ -9,6 +9,9 @@ export default class Card {
     this._cardSelector = cardSelector
     this._handleCardClick = handleCardClick
     this._handleTrashClick = handleTrashClick
+    this._setLike = setLike
+    this._deleteLike = deleteLike
+    this._likeCard = this._likeCard.bind(this) 
   }
 
   _getTemplate() {
@@ -32,6 +35,12 @@ export default class Card {
     this._cardLikeButton = this._card.querySelector('.element__like')
     this._cardRemoveButton = this._card.querySelector('.element__remove')
     this._cardLikeCount = this._card.querySelector('.element__like-count')
+
+    this._likes.forEach(item => {
+      if (item._id === this._userId) {
+        this._cardLikeButton.classList.add('element__like_active')
+      }
+    });
     this._checkId()
     this._cardImage.src = this._link
     this._cardImage.alt = this._name
@@ -41,8 +50,15 @@ export default class Card {
     return this._card
   }
 
-  _likeCard(event) {
-    event.target.classList.toggle('element__like_click')
+  _likeCard(evt) {
+    if (evt.target.classList.contains('element__like_active')) {
+      this._cardLikeButton.classList.remove('element__like_active')
+      this._deleteLike()
+    } else {
+      this._cardLikeButton.classList.add('element__like_active')
+      this._setLike()
+    }
+    
   }
 
   removeItem() {
@@ -57,5 +73,9 @@ export default class Card {
 
   returnCardId() {
     return this._imageId
+  }
+
+  changeLikesCount(count) {
+    this._cardLikeCount.textContent = count
   }
 }

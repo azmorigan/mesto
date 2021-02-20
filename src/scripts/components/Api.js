@@ -12,7 +12,7 @@ export default class Api {
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Карточки не найдены')
+        return Promise.reject(`Карточки не найдены: ${res.status}` )
       })
   }
 
@@ -24,7 +24,7 @@ export default class Api {
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Данные профиля не найдены')
+        return Promise.reject(`Данные профиля не найдены: ${res.status}`)
       })
   }
 
@@ -41,7 +41,7 @@ export default class Api {
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Редактирование не удалось')
+        return Promise.reject(`Редактирование не удалось: ${res.status}`)
       })
   }
 
@@ -58,7 +58,7 @@ export default class Api {
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Редактирование не удалось')
+        return Promise.reject(`Карточка не добавлена: ${res.status}`)
       })
   }
 
@@ -71,8 +71,49 @@ export default class Api {
         if (res.ok) {
           return res.json()
         }
-        return Promise.reject('Удаление не удалось')
+        return Promise.reject(`Карточка не удалена: ${res.status}`)
       })
   }
 
+  setLike(data) {
+    return fetch(this._url + 'cards/likes/' + data, {
+      method: "PUT",
+      headers: this._headers,
+    })
+      .then(res=>{
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Лайк не поставился: ${res.status}`)
+      })
+  }
+
+  deleteLike(data) {
+    return fetch(this._url + 'cards/likes/' + data, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then(res=>{
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Лайк не удалился: ${res.status}`)
+      })
+  }
+
+  editProfile(imageUrl) {
+    return fetch(this._url + 'users/me/avatar', {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: imageUrl
+      })
+    })
+      .then(res=>{
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Аватар не изменен: ${res.status}`)
+      })
+  }
 }

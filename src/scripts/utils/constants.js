@@ -30,3 +30,10 @@ export const validationConfig = {
 
 // Попап редактирования аватара
 export const formEditAvatar = document.querySelector('.form_type_edit-avatar')
+
+export const avatarButton = document.querySelector('.profile__avatar-button')
+
+
+export const formChangeAvatar = document.querySelector('.form_type_edit-avatar')
+
+export const inputChangeAvatar = document.querySelector('.form__input_type_edit-avatar')

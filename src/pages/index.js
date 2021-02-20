@@ -17,7 +17,10 @@ import {editPopupChangeProfileButton,
   profileName,
   profileJob,
   nameInputChangeProfile,
-  jobInputChangeProfile} from '../scripts/utils/constants.js'
+  jobInputChangeProfile,
+  avatarButton,
+  inputChangeAvatar,
+  formChangeAvatar} from '../scripts/utils/constants.js'
 import './index.css'
 
 
@@ -71,6 +74,18 @@ function createCard({name, link, owner, _id, likes}) {
   () => {
     confirmDeletePopup.setEventListeners(removeCard(card))
     confirmDeletePopup.open()
+  },
+  () => {
+    api.setLike(card.returnCardId())
+      .then(res => {
+        card.changeLikesCount(res.likes.length)
+      })
+  },
+  () => {
+    api.deleteLike(card.returnCardId())
+      .then(res => {
+        card.changeLikesCount(res.likes.length)
+      })
   })
   return card.createCard()
 }
@@ -91,8 +106,10 @@ function openPopupAddCard() {
   popupFormAddCard.open()
 }
 
-editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
-openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
+function openPopupChangeAvatar() {
+  editAvatarValidator.setButtonState(formChangeAvatar.checkValidity())
+  popupChangeAvatar.open()
+}
 
 
 //----------------Отправка форм-------------//
@@ -121,6 +138,25 @@ const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
   .catch(err=>console.log(err)) 
 }})
 popupFormEditProfile.setEventListeners()
+
+
+const popupChangeAvatar = new PopupWithForm('.popup_type_edit-avatar',
+{handleFormSubmit: (data) => {
+  api
+  .editProfile(data.avatar)
+  .then(res=>{
+    infoProfile.setAvatar(data.avatar)
+  })
+  .catch(err=>console.log(err)) 
+  }})
+popupChangeAvatar.setEventListeners()
+
+
+
+editPopupChangeProfileButton.addEventListener('click', () => openPopupChangeProfile())
+openPopupAddCardButton.addEventListener('click', () => openPopupAddCard())
+avatarButton.addEventListener('click', () => openPopupChangeAvatar())
+
 
 
 //-----------------Валидация----------------//

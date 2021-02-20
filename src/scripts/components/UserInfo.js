@@ -35,4 +35,8 @@ export default class UserInfo {
   returnUserId() {
     return this._userId
   }
+
+  setAvatar(link) {
+    this._avatarProfile.src = link
+  }
 }
