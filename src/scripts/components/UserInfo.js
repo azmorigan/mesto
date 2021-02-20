@@ -27,4 +27,12 @@ export default class UserInfo {
     this._avatarProfile.src = img
     this._avatarProfile.alt = name 
   }
+
+  setUserId(id) {
+    this._userId = id
+  }
+
+  returnUserId() {
+    return this._userId
+  }
 }

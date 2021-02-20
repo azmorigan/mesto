@@ -11,7 +11,6 @@ import {editPopupChangeProfileButton,
   openPopupAddCardButton,
   formAddCard,
   formEditAvatar,
-  initialCardList,
   listCards,
   validationConfig,
   profileName,
@@ -52,10 +51,9 @@ function handleCardClick(img, name) {
 }
 
 // Создать карточку
-function createCard(data, likes) {
-  const card = new Card(data, likes, "#template-card", handleCardClick)
-  const cardElement = card.createCard()
-  return cardElement
+function createCard({name, link, owner, _id, likes}) {
+  const card = new Card({name, link, owner, _id, userId: infoProfile.returnUserId(), likes}, "#template-card", handleCardClick)
+  return card.createCard()
 }
 
 
@@ -83,12 +81,9 @@ const popupFormAddCard = new PopupWithForm('.popup_type_add-card',
   {handleFormSubmit: (data) => {
     api
       .addCard(data)
-      .then(res=>{
-        const cardElement = createCard({
-          name: res.name,
-          link: res.link
-        })
-        listCards.prepend(cardElement)
+      .then((res)=>{
+        const cardElement = createCard(res)
+        cardList.addItem(cardElement)
       })
       .catch(err=>console.log(err))
   }
@@ -104,7 +99,7 @@ const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
     profileName.textContent,
     profileJob.textContent)
   .then(res=>res)
-  .catch(err=>err) 
+  .catch(err=>console.log(err)) 
 }})
 popupFormEditProfile.setEventListeners()
 
@@ -121,18 +116,17 @@ editAvatarValidator.enableValidation()
 
 
 //------------Загрузка карточек--------------//
+const cardList = new Section({
+  renderer: (item) => {
+    cardList.addItem(createCard(item))
+  }
+}, listCards)
+
 
 api
   .getInitialCards()
-  .then(data=>{
-    const initialCardList = new Section({
-      items: data,
-      renderer: (item)=>{
-        let likesCount = item.likes.length
-        const cardElement = createCard(item, likesCount)
-        initialCardList.addItem(cardElement)
-      }}, listCards)
-    initialCardList.renderItems()
+  .then(res=>{
+    cardList.renderItems(res)
   })
   .catch(err=>console.log(err))
 
@@ -140,11 +134,12 @@ api
 //------------Загрузка профиля--------------//
 api
   .getProfileInfo()
-  .then(({name, about, avatar}) => {
+  .then((res) => {
     infoProfile.setInitialInfo({
-      name,
-      job: about,
-      img: avatar
+      name: res.name,
+      job: res.about,
+      img: res.avatar
     })
+    infoProfile.setUserId(res._id)
   })
   .catch(err=>console.log(err))
