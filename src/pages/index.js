@@ -160,8 +160,8 @@ const popupFormEditProfile = new PopupWithForm('.popup_type_edit-profile',
   renderLoading('.popup_type_edit-profile', true)
   api
   .uploadProfileInfo(
-    profileName.textContent,
-    profileJob.textContent)
+    data.name,
+    data.job)
   .then(res=>{
     infoProfile.setUserInfo(data)})
   .catch(err=>console.log(err))
